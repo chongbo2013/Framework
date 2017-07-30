@@ -1,0 +1,45 @@
+// buildScript块与allprojects块及根级别的repositories区别
+// 1.buildScript块主要是为了Gradle脚本自身的执行
+// 2.allprojects块的repositories用于多项目构建，为所有项目提供共同所需依赖包
+// 3.根级别的repositories主要是为了当前项目提供所需依赖包
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        flatDir {
+            dirs '../aarlibs'
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        // maven {
+        //     url 'https://maven.google.com'
+        // }
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects{
+    repositories {
+        flatDir {
+            dirs '../aarlibs'
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        // maven {
+        //     url 'https://maven.google.com'
+        // }
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
