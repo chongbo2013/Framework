@@ -1,6 +1,9 @@
 ﻿# Git
 */.gitignore
 
+# SVN
+.svn/
+
 # Eclipse
 .classpath
 .project
