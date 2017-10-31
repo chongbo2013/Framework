@@ -1,6 +1,6 @@
-#### use AndroidStudio 2.3.x
+#### use AndroidStudio 3.0
 
-#### use Gradle 4.x
+#### use Gradle 4.1
 
 #### add Proguard script
 
