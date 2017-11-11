@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.MainActivity">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_shouye"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_shouye"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/main_tab_shouye_pic" />
+
+            <TextView
+                android:id="@+id/tv_shouye"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/main_tab_selector"
+                android:textSize="10dp"
+                android:text="@string/main_tab_1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_zhishiquan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_zhishiquan"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/main_tab_zhishiquan_pic" />
+
+            <TextView
+                android:id="@+id/tv_zhishiquan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/main_tab_selector"
+                android:textSize="10dp"
+                android:text="@string/main_tab_2"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_kefu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_kefu"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/main_tab_kefu_pic" />
+
+            <TextView
+                android:id="@+id/tv_kefu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/main_tab_selector"
+                android:textSize="10dp"
+                android:text="@string/main_tab_3"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_wode"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_wode"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/main_tab_wode_pic" />
+
+            <TextView
+                android:id="@+id/tv_wode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/main_tab_selector"
+                android:textSize="10dp"
+                android:text="@string/main_tab_4"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

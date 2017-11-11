@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">安世界</string>
+
+    <string name="main_tab_1">首页</string>
+    <string name="main_tab_2">知识圈</string>
+    <string name="main_tab_3">客服</string>
+    <string name="main_tab_4">我的</string>
+
+    <string name="hint_phone_empty">手机号码不能为空</string>
+    <string name="hint_phone_error">手机号码格式不正确</string>
+    <string name="hint_sms_empty">验证码不能为空</string>
+    <string name="hint_sms_error">验证码不正确</string>
+    <string name="hint_password_empty">密码不能为空</string>
+    <string name="hint_password_error">请输入6-16位字母、数字密码</string>
+    <string name="hint_password_different">两次密码输入不相同</string>
+    <string name="hint_agreement_unconfirmed">请确认并勾选服务条款</string>
+</resources>

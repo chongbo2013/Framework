@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorText">#333333</color>
+    <color name="colorMain">#2D7BF0</color>
+    <color name="colorHighlight">#FF4081</color>
+    <color name="colorForeground">#FFFFFF</color>
+    <color name="colorBackground">#F7F7F7</color>
+
+    <color name="colorPrimary">@color/colorMain</color>
+    <color name="colorPrimaryDark">@color/colorMain</color>
+    <color name="colorAccent">@color/colorHighlight</color>
+
+    <color name="general_line">#F7F7F7</color>
+    <color name="general_edit">#666666</color>
+    <color name="general_edit_hint">#BBBBBB</color>
+
+    <color name="main_tab_selected">@color/colorMain</color>
+    <color name="main_tab_normal">#999999</color>
+</resources>

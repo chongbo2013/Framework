@@ -1,0 +1,22 @@
+<resources>
+
+    <style name="general_line">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/general_line</item>
+    </style>
+
+    <style name="general_edit">
+        <item name="android:textColorHint">@color/general_edit_hint</item>
+        <item name="android:background">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="general_button">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/general_button</item>
+        <item name="android:background">@drawable/general_button</item>
+    </style>
+
+</resources>

@@ -20,8 +20,11 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api 'com.liux:xxxx:x.x.x'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    api 'com.liux:base:0.1.0'
+    api 'com.liux:http:0.1.0'
+    api 'com.liux:view:0.1.0'
+    api 'com.liux:util:0.1.0'
+    api 'com.liux:other:0.1.0'
+    api 'com.liux:glide:0.1.0'
+    api 'com.liux:permission:0.1.0'
 }

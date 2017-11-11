@@ -4,11 +4,12 @@ buildscript {
             dirs '../aarlibs'
         }
         maven {
-            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+            url 'http://maven.lx0758.cc/nexus/content/groups/public/'
         }
         google()
         jcenter()
         mavenLocal()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
@@ -24,17 +25,18 @@ allprojects{
             dirs '../aarlibs'
         }
         maven {
-            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+            url 'http://maven.lx0758.cc/nexus/content/groups/public/'
         }
         google()
         jcenter()
         mavenLocal()
+        mavenCentral()
     }
-
-    // 设置编码格式
+    // 设置全局代码编码
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
+    // 设置全局文档编码
     tasks.withType(Javadoc) {
         options {
             encoding "UTF-8"
@@ -60,6 +62,6 @@ ext {
             MIN_SDK_VERSION : 15,
             TARGET_SDK_VERSION  : 25,
             COMPILE_SDK_VERSION : 25,
-            BUILD_TOOLS_VERSION : '27.0.0'
+            BUILD_TOOLS_VERSION : '27.0.1'
     ]
 }
