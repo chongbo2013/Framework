@@ -6,4 +6,4 @@
 
 #### add Git and SVN ignore
 
-#### add Maven mirror from <http://maven.lx0758.cc/nexus/>
+#### add Maven mirror from <http://maven.lx0758.cc/>
