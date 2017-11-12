@@ -12,9 +12,11 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.domain.name.ui.view.WhiteTitleBar;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
+import com.liux.base.titlebar.TitleBar;
 import com.liux.view.SingleToast;
 import com.domain.name.R;
 import com.domain.name.base.BaseActivity;
@@ -60,8 +62,14 @@ public class WebViewActivity extends BaseActivity {
     }
 
     @Override
+    protected TitleBar onInitTitleBar() {
+        return new WhiteTitleBar(this);
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState, Intent intent) {
-        setContentView(R.layout.activity_webview);
+        mBridgeWebView = new BridgeWebView(this);
+        setContentView(mBridgeWebView);
     }
 
     @Override
@@ -72,7 +80,6 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void onInitView(@Nullable Bundle savedInstanceState) {
-        mBridgeWebView = (BridgeWebView) findViewById(R.id.wb_webview);
         mJavaScriptImpl = new JavaScriptImpl();
         mBridgeWebViewClient = new BridgeWebViewClientCus(mBridgeWebView);
 
@@ -110,10 +117,6 @@ public class WebViewActivity extends BaseActivity {
         mBridgeWebView.removeAllViews();
         mBridgeWebView.destroy();
         super.onDestroy();
-    }
-
-    public void test(View view) {
-        callJavaScript("abc", "123");
     }
 
     /**
@@ -247,12 +250,12 @@ public class WebViewActivity extends BaseActivity {
      * 注入浏览器的方法集合实现
      */
     private class JavaScriptImpl implements JavaScript {
-        public static final String CLASS_NAME = "user_app";
+        public static final String CLASS_NAME = "android";
 
         @Override
         @JavascriptInterface
         public String j2nr(String param1, String param2) {
-            return null;
+            return String.valueOf(System.currentTimeMillis());
         }
 
         @Override

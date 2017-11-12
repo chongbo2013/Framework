@@ -57,6 +57,6 @@ public class MainHomeFragment extends BaseFragment {
 
     @OnClick(R.id.btn_webview)
     public void onViewClicked() {
-        WebViewActivity.startWebView(getContext(), "http://lianhezhiyewap.zpftech.com");
+        WebViewActivity.startWebView(getContext(), "http://lx0758.cc");
     }
 }
