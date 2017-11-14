@@ -37,7 +37,13 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation project(':library')
+    implementation 'com.liux:base:0.1.1'
+    implementation 'com.liux:http:0.1.1'
+    implementation 'com.liux:view:0.1.0'
+    implementation 'com.liux:util:0.1.0'
+    implementation 'com.liux:other:0.1.0'
+    implementation 'com.liux:glide:0.1.0'
+    implementation 'com.liux:permission:0.1.0'
 
     implementation 'com.github.lzyzsd:jsbridge:1.0.4'
 
