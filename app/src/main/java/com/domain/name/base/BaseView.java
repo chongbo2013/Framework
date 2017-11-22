@@ -1,8 +1,11 @@
 package com.domain.name.base;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
+
+import com.domain.name.app.AppControl;
+import com.domain.name.app.ApplicationCus;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,9 +19,9 @@ import io.reactivex.disposables.Disposable;
  * Created by Liux on 2017/9/13.
  */
 
-public class BaseViewImpl implements BaseContract.View {
+public class BaseView implements BaseContract.View {
 
-    private Context mContext;
+    private Activity mActivity;
     private List<Disposable> mDisposables;
     private ProgressDialog mProgressDialog;
     private CompositeDisposable mCompositeDisposable;
@@ -37,14 +40,31 @@ public class BaseViewImpl implements BaseContract.View {
         }
     };
 
-    public BaseViewImpl(Context context) {
-        mContext = context;
+    public BaseView(Activity activity) {
+        mActivity = activity;
         mDisposables = new ArrayList<>();
-        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog = new ProgressDialog(mActivity);
         mCompositeDisposable = new CompositeDisposable();
 
         mProgressDialog.setMessage("加载中...");
         mProgressDialog.setOnDismissListener(mOnDismissListener);
+    }
+
+    @Override
+    public AppControl.View getAppView() {
+        return ApplicationCus.getAppView();
+    }
+
+    @Override
+    public AppControl.Presenter getAppPresenter() {
+        return ApplicationCus.getAppPresenter();
+    }
+
+    @Override
+    public boolean interceptFailure(int code, String msg) {
+        AppControl.View view = ApplicationCus.getAppView();
+        AppControl.Presenter presenter = ApplicationCus.getAppPresenter();
+        return false;
     }
 
     @Override
@@ -98,6 +118,6 @@ public class BaseViewImpl implements BaseContract.View {
             }
             mDisposables = null;
         }
-        mContext = null;
+        mActivity = null;
     }
 }

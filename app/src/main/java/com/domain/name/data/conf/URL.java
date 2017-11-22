@@ -14,5 +14,5 @@ public class URL {
     /**
      * 用户协议
      */
-    public static final String URL_CLAUSE = "http://www.lx0758.cc/";
+    public static final String URL_CLAUSE = URL_ROOT + "about.html";
 }

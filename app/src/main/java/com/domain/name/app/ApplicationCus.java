@@ -36,10 +36,12 @@ public class ApplicationCus extends Application {
         mContext = this;
 
         HttpClient.initialize(this, URL.URL_ROOT);
-        HttpClient.getInstance().setOnCheckParamsListener(new HttpClient.OnCheckParamsListener() {
+        HttpClient.getInstance().setOnCheckHeadersListener(new HttpClient.OnCheckHeadersListener() {
             @Override
-            public void onCheckParams(Request request, Map<String, String> params) {
-
+            public void onCheckHeaders(Request request, Map<String, String> headers) {
+                if (request.url().toString().startsWith(URL.URL_ROOT)) {
+                    headers.put("Accept", "application/json");
+                }
             }
         });
 

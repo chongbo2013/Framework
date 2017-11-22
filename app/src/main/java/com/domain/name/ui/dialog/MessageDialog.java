@@ -1,9 +1,12 @@
 package com.domain.name.ui.dialog;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.graphics.Color;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.domain.name.base.BaseDialog;
 
@@ -11,17 +14,68 @@ import com.domain.name.base.BaseDialog;
  * Created by Liux on 2017/11/11.
  */
 
-public class MessageDialog extends BaseDialog {
+public class MessageDialog extends BaseDialog<MessageDialog> {
 
-    public MessageDialog(@NonNull Context context) {
+    private TextView mTextView;
+
+    private OnMessageListener mOnMessageListener;
+
+    public MessageDialog(Context context) {
         super(context);
     }
 
-    public MessageDialog(@NonNull Context context, int themeResId) {
-        super(context, themeResId);
+    @Override
+    protected void initView(ViewGroup viewGroup) {
+        int color = Color.parseColor("#333333");
+        mTextView = new TextView(getContext());
+        mTextView.setTextColor(color);
+        mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18.0F);
+
+        setCancelTextColor(color);
+        setEnsureTextColor(color);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+        );
+        layoutParams.gravity = Gravity.CENTER;
+        viewGroup.addView(mTextView, layoutParams);
     }
 
-    protected MessageDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
-        super(context, cancelable, cancelListener);
+    @Override
+    protected boolean onCancel() {
+        if (mOnMessageListener != null) {
+            return mOnMessageListener.onCancel();
+        }
+        return true;
+    }
+
+    @Override
+    protected boolean onEnsure() {
+        if (mOnMessageListener != null) {
+            return mOnMessageListener.onEnsure();
+        }
+        return true;
+    }
+
+    public MessageDialog setMessage(int msgid) {
+        mTextView.setText(msgid);
+        return this;
+    }
+
+    public MessageDialog setMessage(CharSequence message) {
+        mTextView.setText(message);
+        return this;
+    }
+
+    public MessageDialog setOnMessageListener(OnMessageListener listener) {
+        mOnMessageListener = listener;
+        return this;
+    }
+
+    public interface OnMessageListener {
+
+        boolean onCancel();
+
+        boolean onEnsure();
     }
 }

@@ -1,23 +1,25 @@
-package com.domain.name.mvp.presenter;
-
-import android.text.TextUtils;
+package com.domain.name.data;
 
 import com.domain.name.base.BaseContract;
 import com.domain.name.data.bean.ResultBean;
 import com.domain.name.data.conf.CODE;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
+
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
+import retrofit2.HttpException;
 
 /**
  * Created by Liux on 2017/9/13
  */
 
-public abstract class PresenterObserver<T> extends DisposableObserver<T> {
+public abstract class GeneralObserver<T> extends DisposableObserver<T> {
     private BaseContract.Presenter mPresenter;
 
-    public PresenterObserver(BaseContract.Presenter presenter) {
+    public GeneralObserver(BaseContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -37,12 +39,20 @@ public abstract class PresenterObserver<T> extends DisposableObserver<T> {
     }
 
     @Override
-    public void onError(@NonNull Throwable e) {
-        if (e instanceof ResultBean.ResultException) {
-            ResultBean bean = ((ResultBean.ResultException) e).getResultBean();
-            onGlobalFailure(bean.getStatus(), bean.getMsg());
+    public void onError(@NonNull Throwable throwable) {
+        if (throwable instanceof UnknownHostException) {
+            // 无网络
+            onGlobalFailure(CODE.ERROR_NETWORK_NONE.code(), CODE.ERROR_NETWORK_NONE.info());
+        } else if (throwable instanceof HttpException || throwable instanceof IOException) {
+            // 网络异常
+            onGlobalFailure(CODE.ERROR_NETWORK.code(), CODE.ERROR_NETWORK.info());
+        } else if (throwable instanceof ResultBean.ResultException) {
+            // 业务异常
+            ResultBean.ResultException exception = (ResultBean.ResultException) throwable;
+            onGlobalFailure(exception.getStatus(), exception.getMessage());
         } else {
-            onGlobalFailure(CODE.API_ERROR.code(), e.getMessage());
+            // 未知错误
+            onGlobalFailure(CODE.ERROR_UNKNOWN.code(), throwable.getMessage());
         }
 
         mPresenter.getView().unregisterDisposable(this);
@@ -84,10 +94,7 @@ public abstract class PresenterObserver<T> extends DisposableObserver<T> {
      * @param msg
      */
     public void onGlobalFailure(int code, String msg) {
-        boolean isGlobal = 1 == 1;
-        if (isGlobal) {
-            // handler global error
-        }
+        if (mPresenter.getView().interceptFailure(code, msg)) return;
         onFailure(code, msg);
     }
 

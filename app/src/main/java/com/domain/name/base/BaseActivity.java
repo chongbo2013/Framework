@@ -3,6 +3,8 @@ package com.domain.name.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.domain.name.app.AppControl;
+
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -15,8 +17,23 @@ public abstract class BaseActivity extends com.liux.base.BaseActivity implements
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        mView = new BaseViewImpl(this);
+        mView = new BaseView(this);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public AppControl.View getAppView() {
+        return mView.getAppView();
+    }
+
+    @Override
+    public AppControl.Presenter getAppPresenter() {
+        return mView.getAppPresenter();
+    }
+
+    @Override
+    public boolean interceptFailure(int code, String msg) {
+        return mView.interceptFailure(code, msg);
     }
 
     @Override

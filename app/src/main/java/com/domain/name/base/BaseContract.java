@@ -1,5 +1,7 @@
 package com.domain.name.base;
 
+import com.domain.name.app.AppControl;
+
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -9,6 +11,12 @@ import io.reactivex.disposables.Disposable;
 public class BaseContract {
 
     public interface View {
+
+        AppControl.View getAppView();
+
+        AppControl.Presenter getAppPresenter();
+
+        boolean interceptFailure(int code, String msg);
 
         void showProgressBar(Disposable disposable);
 

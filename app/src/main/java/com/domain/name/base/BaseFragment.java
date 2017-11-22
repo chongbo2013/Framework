@@ -2,6 +2,8 @@ package com.domain.name.base;
 
 import android.content.Context;
 
+import com.domain.name.app.AppControl;
+
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -15,7 +17,22 @@ public abstract class BaseFragment extends com.liux.base.BaseFragment implements
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mView = new BaseViewImpl(getActivity());
+        mView = new BaseView(getActivity());
+    }
+
+    @Override
+    public AppControl.View getAppView() {
+        return mView.getAppView();
+    }
+
+    @Override
+    public AppControl.Presenter getAppPresenter() {
+        return mView.getAppPresenter();
+    }
+
+    @Override
+    public boolean interceptFailure(int code, String msg) {
+        return mView.interceptFailure(code, msg);
     }
 
     @Override

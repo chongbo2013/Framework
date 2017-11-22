@@ -37,8 +37,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation 'com.liux:base:0.1.1'
-    implementation 'com.liux:http:0.1.1'
+    implementation 'com.liux:base:0.1.2'
+    implementation 'com.liux:http:0.1.2'
     implementation 'com.liux:view:0.1.0'
     implementation 'com.liux:util:0.1.0'
     implementation 'com.liux:other:0.1.0'

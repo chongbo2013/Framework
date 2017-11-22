@@ -6,10 +6,11 @@ package com.domain.name.data.conf;
 
 public enum CODE {
 
-    API_SUCCEED(200, "访问成功"),
-    API_ERROR (0, "内部错误"),
+    ERROR_UNKNOWN(-1, "内部错误"),
+    ERROR_NETWORK(-2, "网络错误"),
+    ERROR_NETWORK_NONE(-3, "没有网络连接"),
 
-    API_NETWORK(400, "网络错误"),;
+    API_SUCCEED(1, "访问成功"),;
 
     private int code;
     private String info;

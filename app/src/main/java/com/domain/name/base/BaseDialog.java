@@ -59,6 +59,16 @@ public abstract class BaseDialog<T extends BaseDialog> extends com.liux.base.Bas
         return (T) this;
     }
 
+    public T setCancelTextColor(int color) {
+        mCancel.setTextColor(color);
+        return (T) this;
+    }
+
+    public T setEnsureTextColor(int color) {
+        mEnsure.setTextColor(color);
+        return (T) this;
+    }
+
     public T hideCancel() {
         mEnsure.setBackgroundResource(R.drawable.dialog_base_bg_right_all);
         mCancel.setVisibility(View.GONE);
