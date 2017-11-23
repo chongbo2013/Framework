@@ -16,8 +16,6 @@ public class BaseContract {
 
         AppControl.Presenter getAppPresenter();
 
-        boolean interceptFailure(int code, String msg);
-
         void showProgressBar(Disposable disposable);
 
         void hideProgressBar(Disposable disposable);
@@ -32,6 +30,12 @@ public class BaseContract {
     public interface Presenter {
 
         View getView();
+
+        AppControl.View getAppView();
+
+        AppControl.Presenter getAppPresenter();
+
+        boolean interceptFailure(int code, String msg);
     }
 
     public interface Model {

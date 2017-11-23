@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import com.liux.base.titlebar.TitleBar;
 import com.liux.base.titlebar.TransparentTitleBar;
 import com.domain.name.R;
-import com.domain.name.app.ApplicationCus;
 import com.domain.name.base.BaseActivity;
 
 import java.util.Map;
@@ -30,7 +29,7 @@ public class LaunchActivity extends BaseActivity {
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                if (ApplicationCus.getAppPresenter().showGuide()) {
+                if (getAppPresenter().showGuide()) {
                     startActivity(new Intent(LaunchActivity.this, GuideActivity.class));
                 } else {
                     startActivity(new Intent(LaunchActivity.this, MainActivity.class));

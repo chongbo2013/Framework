@@ -6,7 +6,10 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 
-import com.domain.name.IUserInfo;
+import com.alibaba.fastjson.JSON;
+import com.domain.name.app.ApplicationCus;
+import com.domain.name.app.IUserInfo;
+import com.domain.name.data.bean.UserBean;
 import com.liux.other.Logger;
 
 /**
@@ -18,8 +21,24 @@ public class LocalService extends Service {
 
     private IBinder mIBinder = new IUserInfo.Stub() {
         @Override
-        public String basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
-            return String.valueOf(System.currentTimeMillis());
+        public boolean isLogin() throws RemoteException {
+            return ApplicationCus.getAppPresenter().isLogin();
+        }
+
+        @Override
+        public void login(String data) throws RemoteException {
+            UserBean userBean = JSON.parseObject(data, UserBean.class);
+            ApplicationCus.getAppPresenter().login(userBean);
+        }
+
+        @Override
+        public void logout() throws RemoteException {
+            ApplicationCus.getAppPresenter().logout();
+        }
+
+        @Override
+        public String getAuthorization() throws RemoteException {
+            return ApplicationCus.getAppPresenter().getAuthorization();
         }
     };
 

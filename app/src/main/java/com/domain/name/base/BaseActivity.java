@@ -32,11 +32,6 @@ public abstract class BaseActivity extends com.liux.base.BaseActivity implements
     }
 
     @Override
-    public boolean interceptFailure(int code, String msg) {
-        return mView.interceptFailure(code, msg);
-    }
-
-    @Override
     public void showProgressBar(Disposable disposable) {
         mView.showProgressBar(disposable);
     }
@@ -58,7 +53,7 @@ public abstract class BaseActivity extends com.liux.base.BaseActivity implements
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mView.onDestroy();
+        super.onDestroy();
     }
 }

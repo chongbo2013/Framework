@@ -2,6 +2,7 @@ package com.domain.name.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 
 import com.liux.base.titlebar.TitleBar;
@@ -28,6 +29,14 @@ public class GuideActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle bundle, Intent intent) {
         setContentView(R.layout.activity_guide);
         ButterKnife.bind(this);
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                getAppPresenter().saveGuide();
+                startActivity(new Intent(GuideActivity.this, MainActivity.class));
+                finish();
+            }
+        }, 3000);
     }
 
     @Override

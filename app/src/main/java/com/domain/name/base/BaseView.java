@@ -61,13 +61,6 @@ public class BaseView implements BaseContract.View {
     }
 
     @Override
-    public boolean interceptFailure(int code, String msg) {
-        AppControl.View view = ApplicationCus.getAppView();
-        AppControl.Presenter presenter = ApplicationCus.getAppPresenter();
-        return false;
-    }
-
-    @Override
     public void showProgressBar(Disposable disposable) {
         if (disposable != null) {
             mDisposables.add(disposable);

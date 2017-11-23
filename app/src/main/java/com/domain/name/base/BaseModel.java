@@ -1,9 +1,12 @@
 package com.domain.name.base;
 
+import com.alibaba.fastjson.JSON;
 import com.domain.name.data.bean.ResultBean;
 import com.domain.name.data.conf.CODE;
 
-import io.reactivex.annotations.NonNull;
+import java.util.List;
+
+import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 
 /**
@@ -14,12 +17,19 @@ public class BaseModel implements BaseContract.Model {
 
     /**
      * 检查返回数据
-     * 在SubscriberEx<T>.onError(Throwable e)中处理
      */
-    public static class DataHandle implements Predicate<ResultBean> {
+    public static class DataHandle implements Function<ResultBean, ResultBean>, Predicate<ResultBean> {
         @Override
-        public boolean test(@NonNull ResultBean resultBean) throws Exception {
-            if (CODE.API_SUCCEED.code() != resultBean.getStatus()) {
+        public ResultBean apply(ResultBean resultBean) throws Exception {
+            if (CODE.API_SUCCEED_200.code() != resultBean.getStatus()) {
+                throw new ResultBean.ResultException(resultBean.getStatus(), resultBean.getMessage());
+            }
+            return resultBean;
+        }
+
+        @Override
+        public boolean test(ResultBean resultBean) throws Exception {
+            if (CODE.API_SUCCEED_200.code() != resultBean.getStatus()) {
                 throw new ResultBean.ResultException(resultBean.getStatus(), resultBean.getMessage());
             }
             return true;
@@ -28,31 +38,47 @@ public class BaseModel implements BaseContract.Model {
 
     /**
      * 检查返回数据 JSONArray
-     * 在SubscriberEx<T>.onError(Throwable e)中处理
      */
-    public static class ArrayDataHandle extends DataHandle {
+    public static class ArrayDataHandle<T> implements Function<ResultBean, List<T>> {
+        private Class<T> clazz;
+
+        public ArrayDataHandle(Class<T> clazz) {
+            this.clazz = clazz;
+        }
+
         @Override
-        public boolean test(@NonNull ResultBean resultBean) throws Exception {
-            super.test(resultBean);
-            if (resultBean.getData() == null || !resultBean.getData().toString().matches("^\\[.*\\]$")) {
+        public List<T> apply(ResultBean resultBean) throws Exception {
+            if (CODE.API_SUCCEED_200.code() != resultBean.getStatus()) {
+                throw new ResultBean.ResultException(resultBean.getStatus(), resultBean.getMessage());
+            }
+            String data = String.valueOf(resultBean.getData());
+            if (data == null || !data.matches("^\\[.*\\]$")) {
                 throw new ResultBean.ResultException(CODE.ERROR_UNKNOWN.code(), "与服务器通信错误");
             }
-            return true;
+            return JSON.parseArray(data, this.clazz);
         }
     }
 
     /**
      * 检查返回数据 JSONObject
-     * 在SubscriberEx<T>.onError(Throwable e)中处理
      */
-    public static class ObjectDataHandle extends DataHandle {
+    public static class ObjectDataHandle<T> implements Function<ResultBean, T> {
+        private Class<T> clazz;
+
+        public ObjectDataHandle(Class<T> clazz) {
+            this.clazz = clazz;
+        }
+
         @Override
-        public boolean test(@NonNull ResultBean resultBean) throws Exception {
-            super.test(resultBean);
-            if (resultBean.getData() == null || !resultBean.getData().toString().matches("^\\{.*\\}$")) {
+        public T apply(ResultBean resultBean) throws Exception {
+            if (CODE.API_SUCCEED_200.code() != resultBean.getStatus()) {
+                throw new ResultBean.ResultException(resultBean.getStatus(), resultBean.getMessage());
+            }
+            String data = String.valueOf(resultBean.getData());
+            if (data == null || !data.matches("^\\{.*\\}$")) {
                 throw new ResultBean.ResultException(CODE.ERROR_UNKNOWN.code(), "与服务器通信错误");
             }
-            return true;
+            return JSON.parseObject(data, this.clazz);
         }
     }
 }

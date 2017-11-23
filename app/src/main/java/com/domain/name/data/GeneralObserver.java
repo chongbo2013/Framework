@@ -94,7 +94,7 @@ public abstract class GeneralObserver<T> extends DisposableObserver<T> {
      * @param msg
      */
     public void onGlobalFailure(int code, String msg) {
-        if (mPresenter.getView().interceptFailure(code, msg)) return;
+        if (mPresenter.interceptFailure(code, msg)) return;
         onFailure(code, msg);
     }
 

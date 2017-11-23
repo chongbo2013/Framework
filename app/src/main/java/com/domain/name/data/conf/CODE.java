@@ -10,7 +10,11 @@ public enum CODE {
     ERROR_NETWORK(-2, "网络错误"),
     ERROR_NETWORK_NONE(-3, "没有网络连接"),
 
-    API_SUCCEED(1, "访问成功"),;
+    API_SUCCEED_200(200, "OK"),
+
+    API_ERROR_400(400, "Bad Request"),
+
+    ;
 
     private int code;
     private String info;
