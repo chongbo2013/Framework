@@ -31,7 +31,7 @@ import okhttp3.MultipartBody;
 public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
     @Override
     public void loadBanner(Observer<ResultBean> observer) {
-        HttpClient.getInstance().getRetrofitService(GeneralApi.class).industry("hangye")
+        HttpClient.getInstance().getService(GeneralApi.class).industry("hangye")
                 .filter(new DataHandle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -41,7 +41,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
     @Override
     public void uploadFile(File file, Observer<JSONObject> observer) {
         MultipartBody.Part part = HttpUtil.parsePart("files[]", file);
-        HttpClient.getInstance().getRetrofitService(GeneralApi.class).uploadFile(part)
+        HttpClient.getInstance().getService(GeneralApi.class).uploadFile(part)
                 .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
                 .map(new Function<List<JSONObject>, JSONObject>() {
                     @Override
@@ -65,7 +65,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
         for (File file : files) {
             parts.add(HttpUtil.parsePart("files[]", file));
         }
-        HttpClient.getInstance().getRetrofitService(GeneralApi.class).uploadFiles(parts)
+        HttpClient.getInstance().getService(GeneralApi.class).uploadFiles(parts)
                 .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -96,7 +96,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         if (TextUtils.isEmpty(file)) {
                             return Observable.just(stringStringMap);
                         }
-                        return HttpClient.getInstance().getRetrofitService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                        return HttpClient.getInstance().getService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
                                 .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
                                 .map(new Function<List<JSONObject>, String>() {
                                     @Override
@@ -120,7 +120,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         if (TextUtils.isEmpty(file)) {
                             return Observable.just(stringStringMap);
                         }
-                        return HttpClient.getInstance().getRetrofitService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                        return HttpClient.getInstance().getService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
                                 .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
                                 .map(new Function<List<JSONObject>, String>() {
                                     @Override
@@ -144,7 +144,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         if (TextUtils.isEmpty(file)) {
                             return Observable.just(stringStringMap);
                         }
-                        return HttpClient.getInstance().getRetrofitService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                        return HttpClient.getInstance().getService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
                                 .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
                                 .map(new Function<List<JSONObject>, String>() {
                                     @Override
@@ -168,7 +168,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         if (TextUtils.isEmpty(file)) {
                             return Observable.just(stringStringMap);
                         }
-                        return HttpClient.getInstance().getRetrofitService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                        return HttpClient.getInstance().getService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
                                 .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
                                 .map(new Function<List<JSONObject>, String>() {
                                     @Override
@@ -192,7 +192,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         if (TextUtils.isEmpty(file)) {
                             return Observable.just(stringStringMap);
                         }
-                        return HttpClient.getInstance().getRetrofitService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                        return HttpClient.getInstance().getService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
                                 .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
                                 .map(new Function<List<JSONObject>, String>() {
                                     @Override
@@ -212,7 +212,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                 .switchMap(new Function<Map<String, String>, ObservableSource<ResultBean>>() {
                     @Override
                     public ObservableSource<ResultBean> apply(final Map<String, String> stringStringMap) throws Exception {
-                        return HttpClient.getInstance().getRetrofitService(GeneralApi.class).submitCompanyInfo(stringStringMap);
+                        return HttpClient.getInstance().getService(GeneralApi.class).submitCompanyInfo(stringStringMap);
                     }
                 })
                 .map(new DataHandle())

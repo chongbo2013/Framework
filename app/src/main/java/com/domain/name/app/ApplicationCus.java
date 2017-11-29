@@ -8,7 +8,9 @@ import com.domain.name.app.control.LocalControl;
 import com.domain.name.app.control.RemoteControl;
 import com.domain.name.data.conf.URL;
 import com.liux.http.HttpClient;
+import com.liux.http.OnHeaderListener;
 import com.liux.util.DeviceUtil;
+import com.tencent.smtt.sdk.QbSdk;
 
 import java.util.Map;
 
@@ -38,9 +40,9 @@ public class ApplicationCus extends Application {
         mContext = this.getApplicationContext();
 
         HttpClient.initialize(this, URL.URL_ROOT);
-        HttpClient.getInstance().setOnCheckHeadersListener(new HttpClient.OnCheckHeadersListener() {
+        HttpClient.getInstance().setOnHeaderListener(new OnHeaderListener() {
             @Override
-            public void onCheckHeaders(Request request, Map<String, String> headers) {
+            public void onHeaders(Request request, Map<String, String> headers) {
                 if (request.url().toString().startsWith(URL.URL_ROOT)) {
                     headers.put("Accept", "application/json");
                 }
@@ -52,6 +54,8 @@ public class ApplicationCus extends Application {
             mView = control;
             mModel = control;
             mPresenter = control;
+
+            QbSdk.initX5Environment(this, null);
         } else {
             RemoteControl control = new RemoteControl(this);
             mView = null;

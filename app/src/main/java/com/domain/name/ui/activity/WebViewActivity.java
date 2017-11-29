@@ -2,25 +2,16 @@ package com.domain.name.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
-import android.webkit.JavascriptInterface;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 
-import com.domain.name.ui.view.WhiteTitleBar;
-import com.github.lzyzsd.jsbridge.BridgeWebView;
-import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
-import com.github.lzyzsd.jsbridge.DefaultHandler;
-import com.liux.base.titlebar.TitleBar;
-import com.liux.view.SingleToast;
-import com.domain.name.R;
 import com.domain.name.base.BaseActivity;
-import com.domain.name.ui.js.JavaScript;
+import com.domain.name.ui.js.JavaScriptImpl;
+import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -33,9 +24,17 @@ public class WebViewActivity extends BaseActivity {
     private static final String PARAM_URL = "WebViewActivity_url";
     private static final String PARAM_HEADER = "WebViewActivity_header";
 
-    private BridgeWebView mBridgeWebView;
+    private WebView mWebView;
     private JavaScriptImpl mJavaScriptImpl;
-    private BridgeWebViewClient mBridgeWebViewClient;
+
+    private WebViewClient mWebViewClient = new WebViewClient() {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (super.shouldOverrideUrlLoading(view, url)) return true;
+            startWebView(WebViewActivity.this, url);
+            return true;
+        }
+    };
 
     private WebChromeClient mWebChromeClient = new WebChromeClient() {
         @Override
@@ -62,14 +61,9 @@ public class WebViewActivity extends BaseActivity {
     }
 
     @Override
-    protected TitleBar onInitTitleBar() {
-        return new WhiteTitleBar(this);
-    }
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState, Intent intent) {
-        mBridgeWebView = new BridgeWebView(this);
-        setContentView(mBridgeWebView);
+        mWebView = new WebView(this);
+        setContentView(mWebView);
     }
 
     @Override
@@ -79,30 +73,28 @@ public class WebViewActivity extends BaseActivity {
     }
 
     @Override
-    protected void onInitView(@Nullable Bundle savedInstanceState) {
-        mJavaScriptImpl = new JavaScriptImpl();
-        mBridgeWebViewClient = new BridgeWebViewClientCus(mBridgeWebView);
-
-        mBridgeWebView.setDefaultHandler(new DefaultHandler());
-        mBridgeWebView.setWebViewClient(mBridgeWebViewClient);
-        mBridgeWebView.setWebChromeClient(mWebChromeClient);
-        mBridgeWebView.addJavascriptInterface(mJavaScriptImpl, JavaScriptImpl.CLASS_NAME);
-
-        initSetting();
-    }
-
-    @Override
     protected void onRestoreData(Map<String, Object> data) {
         mUrl = (String) data.get(PARAM_URL);
         mHeader = (Map<String, String>) data.get(PARAM_HEADER);
     }
 
     @Override
+    protected void onInitView(@Nullable Bundle savedInstanceState) {
+        mJavaScriptImpl = new JavaScriptImpl();
+
+        mWebView.setWebViewClient(mWebViewClient);
+        mWebView.setWebChromeClient(mWebChromeClient);
+        mWebView.addJavascriptInterface(mJavaScriptImpl, JavaScriptImpl.CLASS_NAME);
+
+        initSetting();
+    }
+
+    @Override
     protected void onLazyLoad() {
         if (mHeader != null) {
-            mBridgeWebView.loadUrl(mUrl, mHeader);
+            mWebView.loadUrl(mUrl, mHeader);
         } else {
-            mBridgeWebView.loadUrl(mUrl);
+            mWebView.loadUrl(mUrl);
         }
     }
 
@@ -114,8 +106,8 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     public void onDestroy() {
-        mBridgeWebView.removeAllViews();
-        mBridgeWebView.destroy();
+        mWebView.removeAllViews();
+        mWebView.destroy();
         super.onDestroy();
     }
 
@@ -123,7 +115,7 @@ public class WebViewActivity extends BaseActivity {
      * 初始化 WebView 各项设置
      */
     private void initSetting() {
-        WebSettings webSettings = mBridgeWebView.getSettings();
+        WebSettings webSettings = mWebView.getSettings();
         // 设置WebView是否支持使用屏幕控件或手势进行缩放，默认是true，支持缩放。
         webSettings.setSupportZoom(false);
         // 设置WebView是否通过手势触发播放媒体，默认是true，需要手势触发。
@@ -234,51 +226,11 @@ public class WebViewActivity extends BaseActivity {
         stringBuffer.append(')');
 
         String cmd = stringBuffer.toString();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            mBridgeWebView.evaluateJavascript(cmd, new ValueCallback<String>() {
-                @Override
-                public void onReceiveValue(String s) {
-                    // 接收返回值
-                }
-            });
-        } else {
-            mBridgeWebView.loadUrl("javascript:" + cmd);
-        }
-    }
-
-    /**
-     * 注入浏览器的方法集合实现
-     */
-    private class JavaScriptImpl implements JavaScript {
-        public static final String CLASS_NAME = "android";
-
-        @Override
-        @JavascriptInterface
-        public String j2nr(String param1, String param2) {
-            return String.valueOf(System.currentTimeMillis());
-        }
-
-        @Override
-        @JavascriptInterface
-        public void Link(String param) {
-            SingleToast.makeText(WebViewActivity.this, "JS调用原生的方法(" + param + ")", SingleToast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * 自定义的 BridgeWebViewClient 类
-     */
-    private class BridgeWebViewClientCus extends BridgeWebViewClient {
-
-        public BridgeWebViewClientCus(BridgeWebView webView) {
-            super(webView);
-        }
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (super.shouldOverrideUrlLoading(view, url)) return true;
-            startWebView(WebViewActivity.this, url);
-            return true;
-        }
+        mWebView.evaluateJavascript(cmd, new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String s) {
+                // 接收返回值
+            }
+        });
     }
 }
