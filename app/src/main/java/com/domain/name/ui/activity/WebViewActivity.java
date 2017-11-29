@@ -30,9 +30,12 @@ public class WebViewActivity extends BaseActivity {
     private WebViewClient mWebViewClient = new WebViewClient() {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (super.shouldOverrideUrlLoading(view, url)) return true;
-            startWebView(WebViewActivity.this, url);
-            return true;
+            if (view.getHitTestResult().getType() == WebView.HitTestResult.UNKNOWN_TYPE) {
+                return false;
+            } else {
+                startWebView(WebViewActivity.this, url);
+                return true;
+            }
         }
     };
 
@@ -109,6 +112,15 @@ public class WebViewActivity extends BaseActivity {
         mWebView.removeAllViews();
         mWebView.destroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+            return;
+        }
+        super.onBackPressed();
     }
 
     /**

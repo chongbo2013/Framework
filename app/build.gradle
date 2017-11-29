@@ -25,11 +25,11 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        debug {
-            minifyEnabled false
-            signingConfig signingConfigs.config
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+//        debug {
+//            minifyEnabled false
+//            signingConfig signingConfigs.config
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
         release {
             minifyEnabled false
             signingConfig signingConfigs.config
