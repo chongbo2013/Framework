@@ -40,14 +40,6 @@ public class ApplicationCus extends Application {
         mContext = this.getApplicationContext();
 
         HttpClient.initialize(this, URL.URL_ROOT);
-        HttpClient.getInstance().setOnHeaderListener(new OnHeaderListener() {
-            @Override
-            public void onHeaders(Request request, Map<String, String> headers) {
-                if (request.url().toString().startsWith(URL.URL_ROOT)) {
-                    headers.put("Accept", "application/json");
-                }
-            }
-        });
 
         if (DeviceUtil.isMainProcess(this)) {
             LocalControl control = new LocalControl(this);
