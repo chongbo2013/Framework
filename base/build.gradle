@@ -1,0 +1,56 @@
+apply plugin: 'com.android.application'
+
+def versions = rootProject.ext.versions
+def librarys = rootProject.ext.librarys
+
+android {
+    signingConfigs {
+        config {
+            keyAlias ''
+            keyPassword ''
+            storeFile file('../store.jks')
+            storePassword ''
+        }
+    }
+    compileSdkVersion versions.compileSdkVersion
+    buildToolsVersion versions.buildToolsVersion
+    defaultConfig {
+        applicationId "com.domain.name"
+        minSdkVersion versions.minSdkVersion
+        targetSdkVersion versions.targetSdkVersion
+        versionCode 10000
+        versionName "1.0.0"
+        multiDexEnabled true
+        signingConfig signingConfigs.config
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+//        debug {
+//            minifyEnabled false
+//            signingConfig signingConfigs.config
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation "com.android.support:appcompat-v7:${librarys.support}"
+
+    implementation ('com.jakewharton:butterknife:8.8.1', {
+        exclude group: 'com.android.support',module: 'appcompat-v7'
+    })
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
