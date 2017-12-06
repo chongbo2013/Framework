@@ -6,7 +6,15 @@ package com.domain.name.ui.js;
 
 public interface JavaScript {
 
-    String j2nr(String param1, String param2);
+    /**
+     * 调用JS方法
+     * @param method
+     * @param params
+     */
+    void callJavaScript(String method, Object... params);
 
-    void Link(String param);
+    /**
+     * 获取Token
+     */
+    String getToken();
 }
