@@ -6,16 +6,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.domain.name.base.BaseActivity;
 import com.domain.name.ui.js.JavaScript;
-import com.domain.name.ui.js.JavaScriptImpl;
 import com.liux.base.titlebar.DefaultTitleBar;
 import com.liux.view.SingleToast;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -57,7 +56,7 @@ public class WebViewActivity extends BaseActivity {
     private Map<String, String> mHeader;
 
     public static void startWebView(Context context, String url) {
-        startWebView(context, url, null, false);
+        startWebView(context, url, null, true);
     }
 
     public static void startWebView(Context context, String url, Map<String, String> header, boolean title) {
@@ -96,13 +95,13 @@ public class WebViewActivity extends BaseActivity {
             ((DefaultTitleBar) getTitleBar()).getView().setVisibility(View.GONE);
         }
 
-        mJavaScript = new JavaScriptImpl(this, mWebView);
+        mJavaScript = new JavaScript(this, mWebView);
 
         mWebView.setVerticalScrollBarEnabled(false);
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setWebViewClient(mWebViewClient);
         mWebView.setWebChromeClient(mWebChromeClient);
-        mWebView.addJavascriptInterface(mJavaScript, JavaScriptImpl.CLASS_NAME);
+        mWebView.addJavascriptInterface(mJavaScript, JavaScript.CLASS_NAME);
 
         initSetting();
     }

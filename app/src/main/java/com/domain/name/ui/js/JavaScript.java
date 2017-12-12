@@ -1,20 +1,65 @@
 package com.domain.name.ui.js;
 
+import android.app.Activity;
+import android.os.Build;
+import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
+import android.webkit.WebView;
+
 /**
  * Created by Liux on 2017/11/7.
  */
 
-public interface JavaScript {
+public class JavaScript {
+    public static final String CLASS_NAME = "user_app";
 
-    /**
-     * 调用JS方法
-     * @param method
-     * @param params
-     */
-    void callJavaScript(String method, Object... params);
+    private Activity mActivty;
+    private WebView mWebView;
 
-    /**
-     * 获取Token
-     */
-    String getToken();
+    public JavaScript(Activity activity, WebView webView) {
+        mActivty = activity;
+        mWebView = webView;
+    }
+
+    public void callJavaScript(String method, Object... params) {
+        StringBuffer stringBuffer = new StringBuffer();
+
+        stringBuffer.append(method).append('(');
+
+        if (params != null && params.length > 0) {
+            for (Object param : params) {
+                stringBuffer
+                        .append('\'')
+                        .append(String.valueOf(param))
+                        .append('\'')
+                        .append(',');
+            }
+            stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+        }
+
+        stringBuffer.append(");");
+
+        final String cmd = stringBuffer.toString();
+        mWebView.post(new Runnable() {
+            @Override
+            public void run() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    mWebView.evaluateJavascript(cmd, new ValueCallback<String>() {
+                        @Override
+                        public void onReceiveValue(String s) {
+                            // 接收返回值
+                        }
+                    });
+                } else {
+                    mWebView.loadUrl(cmd);
+                }
+            }
+        });
+    }
+
+    @JavascriptInterface
+    public String getToken() {
+        String token = "";
+        return token;
+    }
 }

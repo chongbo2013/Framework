@@ -8,13 +8,7 @@ import com.domain.name.app.control.LocalControl;
 import com.domain.name.app.control.RemoteControl;
 import com.domain.name.data.conf.URL;
 import com.liux.http.HttpClient;
-import com.liux.http.OnHeaderListener;
 import com.liux.util.DeviceUtil;
-import com.tencent.smtt.sdk.QbSdk;
-
-import java.util.Map;
-
-import okhttp3.Request;
 
 /**
  * Created by Liux on 2017/8/17.
@@ -46,8 +40,6 @@ public class ApplicationCus extends Application {
             mView = control;
             mModel = control;
             mPresenter = control;
-
-            QbSdk.initX5Environment(this, null);
         } else {
             RemoteControl control = new RemoteControl(this);
             mView = null;
