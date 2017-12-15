@@ -54,6 +54,8 @@ dependencies {
     })
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
+    implementation 'com.tencent.bugly:crashreport:latest.release'
+
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4'
 
     testImplementation 'junit:junit:4.12'

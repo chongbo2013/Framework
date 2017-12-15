@@ -9,12 +9,13 @@ import com.domain.name.app.control.RemoteControl;
 import com.domain.name.data.conf.URL;
 import com.liux.http.HttpClient;
 import com.liux.util.AppUtil;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Created by Liux on 2017/8/17.
  */
 
-public class ApplicationCus extends Application {
+public class ApplicationInstance extends Application {
 
     private static Context mContext;
     private static AppControl.View mView;
@@ -46,6 +47,8 @@ public class ApplicationCus extends Application {
             mModel = null;
             mPresenter = control;
         }
+
+        CrashReport.initCrashReport(getApplicationContext());
     }
 
     public static Context getContext() {

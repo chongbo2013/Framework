@@ -15,6 +15,7 @@ import com.domain.name.base.BaseActivity;
 import com.domain.name.ui.js.JavaScript;
 import com.liux.abstracts.titlebar.DefaultTitleBar;
 import com.liux.view.SingleToast;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -104,6 +105,8 @@ public class WebViewActivity extends BaseActivity {
         mWebView.addJavascriptInterface(mJavaScript, JavaScript.CLASS_NAME);
 
         initSetting();
+
+        CrashReport.setJavascriptMonitor(mWebView, true);
     }
 
     @Override
