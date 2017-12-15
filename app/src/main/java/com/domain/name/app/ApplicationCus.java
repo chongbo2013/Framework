@@ -8,7 +8,7 @@ import com.domain.name.app.control.LocalControl;
 import com.domain.name.app.control.RemoteControl;
 import com.domain.name.data.conf.URL;
 import com.liux.http.HttpClient;
-import com.liux.util.DeviceUtil;
+import com.liux.util.AppUtil;
 
 /**
  * Created by Liux on 2017/8/17.
@@ -35,7 +35,7 @@ public class ApplicationCus extends Application {
 
         HttpClient.initialize(this, URL.URL_ROOT);
 
-        if (DeviceUtil.isMainProcess(this)) {
+        if (AppUtil.isMainProcess(this)) {
             LocalControl control = new LocalControl(this);
             mView = control;
             mModel = control;

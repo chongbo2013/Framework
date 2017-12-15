@@ -30,9 +30,9 @@ import okhttp3.MultipartBody;
 
 public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
     @Override
-    public void loadBanner(Observer<ResultBean> observer) {
+    public void loadBanner(Observer<List<JSONObject>> observer) {
         HttpClient.getInstance().getService(GeneralApi.class).industry("hangye")
-                .filter(new DataHandle())
+                .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

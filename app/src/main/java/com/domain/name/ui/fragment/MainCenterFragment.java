@@ -54,6 +54,11 @@ public class MainCenterFragment extends BaseFragment {
     }
 
     @Override
+    protected void onVisibleChanged() {
+
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();

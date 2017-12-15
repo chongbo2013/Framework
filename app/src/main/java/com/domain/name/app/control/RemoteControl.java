@@ -43,16 +43,6 @@ public class RemoteControl implements AppControl.Presenter {
     }
 
     @Override
-    public boolean showGuide() {
-        return false;
-    }
-
-    @Override
-    public void saveGuide() {
-
-    }
-
-    @Override
     public boolean isLogin() {
         try {
             return mIUserInfo.isLogin();

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.domain.name.app.AppControl;
+import com.liux.abstracts.AbstractsActivity;
 
 import io.reactivex.disposables.Disposable;
 
@@ -11,7 +12,7 @@ import io.reactivex.disposables.Disposable;
  * Created by Liux on 2017/11/6.
  */
 
-public abstract class BaseActivity extends com.liux.base.BaseActivity implements BaseContract.View {
+public abstract class BaseActivity extends AbstractsActivity implements BaseContract.View {
 
     private BaseContract.View mView;
 

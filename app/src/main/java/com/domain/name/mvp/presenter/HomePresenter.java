@@ -1,30 +1,33 @@
 package com.domain.name.mvp.presenter;
 
+import com.alibaba.fastjson.JSONObject;
 import com.domain.name.base.BasePresenter;
 import com.domain.name.data.GeneralObserver;
 import com.domain.name.data.bean.ResultBean;
-import com.domain.name.mvp.contract.MainContract;
+import com.domain.name.mvp.contract.HomeContract;
 import com.domain.name.mvp.model.GeneralApiModel;
 import com.domain.name.mvp.model.impl.GeneralApiModelImpl;
+
+import java.util.List;
 
 /**
  * Created by Liux on 2017/11/11.
  */
 
-public class MainPresenter extends BasePresenter<MainContract.View> implements MainContract.Presenter {
+public class HomePresenter extends BasePresenter<HomeContract.View> implements HomeContract.Presenter {
     private GeneralApiModel mGeneralApiModel;
 
-    public MainPresenter(MainContract.View view) {
+    public HomePresenter(HomeContract.View view) {
         super(view);
         mGeneralApiModel = new GeneralApiModelImpl();
     }
 
     @Override
     public void loadBanner() {
-        mGeneralApiModel.loadBanner(new GeneralObserver<ResultBean>(this) {
+        mGeneralApiModel.loadBanner(new GeneralObserver<List<JSONObject>>(this) {
             @Override
-            public void onSucceed(ResultBean resultBean) {
-                getView().loadSucceed();
+            public void onSucceed(List<JSONObject> jsonObjects) {
+                getView().loadSucceed(jsonObjects);
             }
 
             @Override

@@ -1,8 +1,5 @@
 apply plugin: 'com.android.application'
 
-def versions = rootProject.ext.versions
-def librarys = rootProject.ext.librarys
-
 android {
     signingConfigs {
         config {
@@ -12,12 +9,12 @@ android {
             storePassword ''
         }
     }
-    compileSdkVersion versions.compileSdkVersion
-    buildToolsVersion versions.buildToolsVersion
+    compileSdkVersion COMPILE_SDK_VERSION as int
+    buildToolsVersion BUILD_TOOLS_VERSION as String
     defaultConfig {
         applicationId "com.domain.name"
-        minSdkVersion versions.minSdkVersion
-        targetSdkVersion versions.targetSdkVersion
+        minSdkVersion MIN_SDK_VERSION as int
+        targetSdkVersion TARGET_SDK_VERSION as int
         versionCode 10000
         versionName "1.0.0"
         multiDexEnabled true
@@ -43,20 +40,21 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation 'com.liux:base:0.1.+'
-    implementation 'com.liux:http:0.1.+'
-    implementation 'com.liux:view:0.1.+'
-    implementation 'com.liux:util:0.1.+'
-    implementation 'com.liux:other:0.1.+'
-    implementation 'com.liux:glide:0.1.+'
-    implementation 'com.liux:permission:0.1.+'
-
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4'
+    // ..\gradlew.bat build --refresh-dependencies
+    implementation 'com.liux:http:+'
+    implementation 'com.liux:view:+'
+    implementation 'com.liux:util:+'
+    implementation 'com.liux:other:+'
+    implementation 'com.liux:glide:+'
+    implementation 'com.liux:abstracts:+'
+    implementation 'com.liux:permission:+'
 
     implementation ('com.jakewharton:butterknife:8.8.1', {
         exclude group: 'com.android.support',module: 'appcompat-v7'
     })
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

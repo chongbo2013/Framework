@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.domain.name.R;
+import com.liux.abstracts.AbstractsDialog;
 
 /**
  * Created by Liux on 2017/11/6.
  */
 
-public abstract class BaseDialog<T extends BaseDialog> extends com.liux.base.BaseDialog {
+public abstract class BaseDialog<T extends BaseDialog> extends AbstractsDialog {
 
     private View mRoot;
     private TextView mCancel, mEnsure;

@@ -50,6 +50,11 @@ public class MainHomeFragment extends BaseFragment {
     }
 
     @Override
+    protected void onVisibleChanged() {
+
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();

@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.domain.name.app.AppControl;
 import com.domain.name.data.bean.UserBean;
-import com.liux.util.DeviceUtil;
 
 import java.util.List;
 import java.util.Vector;
@@ -72,6 +71,11 @@ public class LocalControl implements AppControl.Presenter, AppControl.Model, App
     };
 
     @Override
+    public Context getContext() {
+        return mApplication.getApplicationContext();
+    }
+
+    @Override
     public Activity getTopActivity() {
         if (mTopActivity == null && !mAppActivitys.isEmpty()) {
             return mAppActivitys.get(mAppActivitys.size() - 1);
@@ -86,16 +90,6 @@ public class LocalControl implements AppControl.Presenter, AppControl.Model, App
     }
 
     /* ========================== Presenter =========================== */
-
-    @Override
-    public boolean showGuide() {
-        return !getGuide();
-    }
-
-    @Override
-    public void saveGuide() {
-        putGuide();
-    }
 
     @Override
     public boolean isLogin() {
@@ -122,7 +116,6 @@ public class LocalControl implements AppControl.Presenter, AppControl.Model, App
     /* ========================== Model =========================== */
     private static final String FILE_XML = "config";
 
-    private static final String KEY_GUIDE = "GUIDE";
     private static final String KEY_USER_DATA = "USER_DATA";
 
     private UserBean mUserBean;
@@ -149,19 +142,5 @@ public class LocalControl implements AppControl.Presenter, AppControl.Model, App
             }
         }
         return mUserBean;
-    }
-
-    @Override
-    public void putGuide() {
-        int code = DeviceUtil.getVersionCode(mApplication);
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putInt(KEY_GUIDE, code);
-        editor.apply();
-    }
-
-    @Override
-    public boolean getGuide() {
-        int code = DeviceUtil.getVersionCode(mApplication);
-        return code == mSharedPreferences.getInt(KEY_GUIDE, 0);
     }
 }

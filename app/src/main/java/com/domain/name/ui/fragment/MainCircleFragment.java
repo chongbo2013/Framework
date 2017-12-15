@@ -40,4 +40,9 @@ public class MainCircleFragment extends BaseFragment {
     protected void onSaveData(Bundle data) {
 
     }
+
+    @Override
+    protected void onVisibleChanged() {
+
+    }
 }

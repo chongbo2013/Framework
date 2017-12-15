@@ -3,6 +3,7 @@ package com.domain.name.base;
 import android.content.Context;
 
 import com.domain.name.app.AppControl;
+import com.liux.abstracts.AbstractsFragment;
 
 import io.reactivex.disposables.Disposable;
 
@@ -10,7 +11,7 @@ import io.reactivex.disposables.Disposable;
  * Created by Liux on 2017/11/6.
  */
 
-public abstract class BaseFragment extends com.liux.base.BaseFragment implements BaseContract.View {
+public abstract class BaseFragment extends AbstractsFragment implements BaseContract.View {
 
     private BaseContract.View mView;
 

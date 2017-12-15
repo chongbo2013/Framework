@@ -40,4 +40,9 @@ public class MainServerFragment extends BaseFragment {
     protected void onSaveData(Bundle data) {
 
     }
+
+    @Override
+    protected void onVisibleChanged() {
+
+    }
 }

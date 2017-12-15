@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 
-import com.liux.base.titlebar.TitleBar;
-import com.liux.base.titlebar.TransparentTitleBar;
 import com.domain.name.R;
 import com.domain.name.base.BaseActivity;
+import com.domain.name.mvp.contract.StartContract;
+import com.domain.name.mvp.presenter.StartPresenter;
+import com.liux.abstracts.titlebar.TitleBar;
+import com.liux.abstracts.titlebar.TransparentTitleBar;
 
 import java.util.Map;
 
@@ -18,7 +20,9 @@ import butterknife.ButterKnife;
  * Created by Liux on 2017/8/17.
  */
 
-public class GuideActivity extends BaseActivity {
+public class GuideActivity extends BaseActivity implements StartContract.View {
+
+    private StartContract.Presenter mPresenter = new StartPresenter(this);
 
     @Override
     protected TitleBar onInitTitleBar() {
@@ -32,7 +36,7 @@ public class GuideActivity extends BaseActivity {
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                getAppPresenter().saveGuide();
+                mPresenter.saveGuide();
                 startActivity(new Intent(GuideActivity.this, MainActivity.class));
                 finish();
             }

@@ -1,6 +1,7 @@
 package com.domain.name.app;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.domain.name.data.bean.UserBean;
 
@@ -14,16 +15,14 @@ public interface AppControl {
 
     interface View {
 
+        Context getContext();
+
         Activity getTopActivity();
 
         List<Activity> getActivitys();
     }
 
     interface Presenter {
-
-        boolean showGuide();
-
-        void saveGuide();
 
         boolean isLogin();
 
@@ -39,9 +38,5 @@ public interface AppControl {
         void putUserInfo(UserBean userBean);
 
         UserBean getUserInfo();
-
-        void putGuide();
-
-        boolean getGuide();
     }
 }

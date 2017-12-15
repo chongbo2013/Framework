@@ -13,7 +13,7 @@ import android.webkit.WebViewClient;
 
 import com.domain.name.base.BaseActivity;
 import com.domain.name.ui.js.JavaScript;
-import com.liux.base.titlebar.DefaultTitleBar;
+import com.liux.abstracts.titlebar.DefaultTitleBar;
 import com.liux.view.SingleToast;
 
 import java.io.Serializable;

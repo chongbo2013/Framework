@@ -2,7 +2,6 @@ package com.domain.name.mvp.model;
 
 import com.alibaba.fastjson.JSONObject;
 import com.domain.name.base.BaseContract;
-import com.domain.name.data.GeneralObserver;
 import com.domain.name.data.bean.ResultBean;
 
 import java.io.File;
@@ -16,7 +15,7 @@ import io.reactivex.Observer;
 
 public interface GeneralApiModel extends BaseContract.Model {
 
-    void loadBanner(Observer<ResultBean> observer);
+    void loadBanner(Observer<List<JSONObject>> observer);
 
     void uploadFile(File file, Observer<JSONObject> observer);
 
