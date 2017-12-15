@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 
 import com.domain.name.R;
 import com.domain.name.base.BaseActivity;
+import com.domain.name.di.component.DaggerPresenterComponent;
+import com.domain.name.di.model.PresentersModel;
 import com.domain.name.mvp.contract.StartContract;
 import com.domain.name.mvp.presenter.StartPresenter;
 import com.liux.abstracts.titlebar.TitleBar;
@@ -14,13 +16,16 @@ import com.liux.abstracts.titlebar.TransparentTitleBar;
 
 import java.util.Map;
 
+import javax.inject.Inject;
+
 /**
  * Created by Liux on 2017/8/17.
  */
 
 public class LaunchActivity extends BaseActivity implements StartContract.View {
 
-    private StartContract.Presenter mPresenter = new StartPresenter(this);
+    @Inject
+    StartPresenter mStartPresenter;
 
     @Override
     protected TitleBar onInitTitleBar() {
@@ -33,7 +38,7 @@ public class LaunchActivity extends BaseActivity implements StartContract.View {
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                if (mPresenter.showGuide()) {
+                if (mStartPresenter.showGuide()) {
                     startActivity(new Intent(LaunchActivity.this, GuideActivity.class));
                 } else {
                     startActivity(new Intent(LaunchActivity.this, MainActivity.class));
@@ -45,7 +50,10 @@ public class LaunchActivity extends BaseActivity implements StartContract.View {
 
     @Override
     protected void onInitData(@Nullable Bundle bundle, Intent intent) {
-
+        DaggerPresenterComponent.builder()
+                .presentersModel(new PresentersModel(this))
+                .build()
+                .inject(this);
     }
 
     @Override

@@ -7,12 +7,16 @@ import android.support.annotation.Nullable;
 
 import com.domain.name.R;
 import com.domain.name.base.BaseActivity;
+import com.domain.name.di.component.DaggerPresenterComponent;
+import com.domain.name.di.model.PresentersModel;
 import com.domain.name.mvp.contract.StartContract;
 import com.domain.name.mvp.presenter.StartPresenter;
 import com.liux.abstracts.titlebar.TitleBar;
 import com.liux.abstracts.titlebar.TransparentTitleBar;
 
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
@@ -22,7 +26,8 @@ import butterknife.ButterKnife;
 
 public class GuideActivity extends BaseActivity implements StartContract.View {
 
-    private StartContract.Presenter mPresenter = new StartPresenter(this);
+    @Inject
+    StartPresenter mStartPresenter;
 
     @Override
     protected TitleBar onInitTitleBar() {
@@ -36,7 +41,7 @@ public class GuideActivity extends BaseActivity implements StartContract.View {
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                mPresenter.saveGuide();
+                mStartPresenter.saveGuide();
                 startActivity(new Intent(GuideActivity.this, MainActivity.class));
                 finish();
             }
@@ -45,7 +50,10 @@ public class GuideActivity extends BaseActivity implements StartContract.View {
 
     @Override
     protected void onInitData(@Nullable Bundle bundle, Intent intent) {
-
+        DaggerPresenterComponent.builder()
+                .presentersModel(new PresentersModel(this))
+                .build()
+                .inject(this);
     }
 
     @Override

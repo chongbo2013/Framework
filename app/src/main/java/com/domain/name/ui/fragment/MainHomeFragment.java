@@ -5,10 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.fastjson.JSONObject;
+import com.domain.name.di.component.DaggerPresenterComponent;
+import com.domain.name.di.model.PresentersModel;
+import com.domain.name.mvp.contract.HomeContract;
+import com.domain.name.mvp.presenter.HomePresenter;
 import com.liux.util.ScreenUtil;
 import com.domain.name.R;
 import com.domain.name.base.BaseFragment;
 import com.domain.name.ui.activity.WebViewActivity;
+import com.liux.view.SingleToast;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -18,12 +28,19 @@ import butterknife.Unbinder;
  * Created by Liux on 2017/11/6.
  */
 
-public class MainHomeFragment extends BaseFragment {
+public class MainHomeFragment extends BaseFragment implements HomeContract.View {
+
+    @Inject
+    HomePresenter mHomePresenter;
+
     Unbinder unbinder;
 
     @Override
     protected void onInitData(Bundle savedInstanceState) {
-
+        DaggerPresenterComponent.builder()
+                .presentersModel(PresentersModel.create(this))
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -36,7 +53,7 @@ public class MainHomeFragment extends BaseFragment {
 
     @Override
     protected void onLazyLoad() {
-
+        mHomePresenter.loadBanner();
     }
 
     @Override
@@ -63,5 +80,15 @@ public class MainHomeFragment extends BaseFragment {
     @OnClick(R.id.btn_webview)
     public void onViewClicked() {
         WebViewActivity.startWebView(getContext(), "http://lx0758.cc");
+    }
+
+    @Override
+    public void loadSucceed(List<JSONObject> jsonObjects) {
+
+    }
+
+    @Override
+    public void loadFailure(String msg) {
+        SingleToast.makeText(getContext(), msg, SingleToast.LENGTH_SHORT).show();
     }
 }

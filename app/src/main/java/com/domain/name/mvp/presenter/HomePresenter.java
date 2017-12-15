@@ -3,28 +3,31 @@ package com.domain.name.mvp.presenter;
 import com.alibaba.fastjson.JSONObject;
 import com.domain.name.base.BasePresenter;
 import com.domain.name.data.GeneralObserver;
-import com.domain.name.data.bean.ResultBean;
+import com.domain.name.di.component.DaggerModelComponent;
 import com.domain.name.mvp.contract.HomeContract;
-import com.domain.name.mvp.model.GeneralApiModel;
 import com.domain.name.mvp.model.impl.GeneralApiModelImpl;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by Liux on 2017/11/11.
  */
 
 public class HomePresenter extends BasePresenter<HomeContract.View> implements HomeContract.Presenter {
-    private GeneralApiModel mGeneralApiModel;
+
+    @Inject
+    GeneralApiModelImpl mGeneralApiModelImpl;
 
     public HomePresenter(HomeContract.View view) {
         super(view);
-        mGeneralApiModel = new GeneralApiModelImpl();
+        DaggerModelComponent.create().inject(this);
     }
 
     @Override
     public void loadBanner() {
-        mGeneralApiModel.loadBanner(new GeneralObserver<List<JSONObject>>(this) {
+        mGeneralApiModelImpl.loadBanner(new GeneralObserver<List<JSONObject>>(this) {
             @Override
             public void onSucceed(List<JSONObject> jsonObjects) {
                 getView().loadSucceed(jsonObjects);
