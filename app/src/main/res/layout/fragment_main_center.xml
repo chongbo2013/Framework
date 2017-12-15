@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/f1_img">
+        android:background="#50d8c7">
 
         <FrameLayout
             android:id="@+id/fl_status_bar"
@@ -25,7 +25,7 @@
                 android:layout_height="80dp"
                 android:layout_centerInParent="true"
                 android:paddingBottom="10dp"
-                android:src="@drawable/f1_touxiang1"/>
+                android:src="#D612C8"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
