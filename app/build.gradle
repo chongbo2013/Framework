@@ -43,8 +43,8 @@ dependencies {
     // ..\gradlew.bat build --refresh-dependencies
     implementation 'com.liux:http:+'
     implementation 'com.liux:view:+'
+    implementation 'com.liux:tool:+'
     implementation 'com.liux:util:+'
-    implementation 'com.liux:other:+'
     implementation 'com.liux:glide:+'
     implementation 'com.liux:abstracts:+'
     implementation 'com.liux:permission:+'

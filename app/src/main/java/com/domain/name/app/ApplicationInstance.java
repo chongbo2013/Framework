@@ -4,10 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.domain.name.BuildConfig;
 import com.domain.name.app.control.LocalControl;
 import com.domain.name.app.control.RemoteControl;
 import com.domain.name.data.conf.URL;
 import com.liux.http.HttpClient;
+import com.liux.http.interceptor.HttpLoggingInterceptor;
+import com.liux.tool.Logger;
 import com.liux.util.AppUtil;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -34,7 +37,10 @@ public class ApplicationInstance extends Application {
 
         mContext = this.getApplicationContext();
 
+        Logger.DEBUG = BuildConfig.DEBUG;
         HttpClient.initialize(this, URL.URL_ROOT);
+        HttpClient.getInstance().setLoggingLevel(BuildConfig.DEBUG ?
+                HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
         if (AppUtil.isMainProcess(this)) {
             LocalControl control = new LocalControl(this);
