@@ -12,6 +12,8 @@ import com.liux.http.HttpClient;
 import com.liux.http.interceptor.HttpLoggingInterceptor;
 import com.liux.tool.Logger;
 import com.liux.util.AppUtil;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.tencent.bugly.crashreport.CrashReport;
 
 /**
@@ -21,6 +23,8 @@ import com.tencent.bugly.crashreport.CrashReport;
 public class ApplicationInstance extends Application {
 
     private static Context mContext;
+    private static RefWatcher mRefWatcher;
+
     private static AppControl.View mView;
     private static AppControl.Model mModel;
     private static AppControl.Presenter mPresenter;
@@ -39,8 +43,13 @@ public class ApplicationInstance extends Application {
 
         Logger.DEBUG = BuildConfig.DEBUG;
         HttpClient.initialize(this, URL.URL_ROOT);
-        HttpClient.getInstance().setLoggingLevel(BuildConfig.DEBUG ?
-                HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
+        HttpClient.getInstance().setLoggingLevel(
+                BuildConfig.DEBUG ?
+                        HttpLoggingInterceptor.Level.BODY :
+                        HttpLoggingInterceptor.Level.NONE
+        );
+        mRefWatcher = LeakCanary.install(this);
+        CrashReport.initCrashReport(getApplicationContext());
 
         if (AppUtil.isMainProcess(this)) {
             LocalControl control = new LocalControl(this);
@@ -53,12 +62,14 @@ public class ApplicationInstance extends Application {
             mModel = null;
             mPresenter = control;
         }
-
-        CrashReport.initCrashReport(getApplicationContext());
     }
 
     public static Context getContext() {
         return mContext;
+    }
+
+    public static RefWatcher getRefWatcher() {
+        return mRefWatcher;
     }
 
     public static AppControl.View getAppView() {
