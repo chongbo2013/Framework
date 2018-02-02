@@ -7,61 +7,60 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 
 import com.alibaba.fastjson.JSON;
-import com.domain.name.app.ApplicationCus;
+import com.domain.name.app.ApplicationInstance;
 import com.domain.name.app.IUserInfo;
 import com.domain.name.data.bean.UserBean;
-import com.liux.other.Logger;
+import com.liux.tool.Logger;
 
 /**
  * Created by Liux on 2017/11/11.
  */
 
 public class LocalService extends Service {
-    public static final String TAG = "LocalService";
 
     private IBinder mIBinder = new IUserInfo.Stub() {
         @Override
         public boolean isLogin() throws RemoteException {
-            return ApplicationCus.getAppPresenter().isLogin();
+            return ApplicationInstance.getAppPresenter().isLogin();
         }
 
         @Override
         public void login(String data) throws RemoteException {
             UserBean userBean = JSON.parseObject(data, UserBean.class);
-            ApplicationCus.getAppPresenter().login(userBean);
+            ApplicationInstance.getAppPresenter().login(userBean);
         }
 
         @Override
         public void logout() throws RemoteException {
-            ApplicationCus.getAppPresenter().logout();
+            ApplicationInstance.getAppPresenter().logout();
         }
 
         @Override
         public String getAuthorization() throws RemoteException {
-            return ApplicationCus.getAppPresenter().getAuthorization();
+            return ApplicationInstance.getAppPresenter().getAuthorization();
         }
     };
 
     @Override
     public void onCreate() {
-        Logger.i(TAG, "onCreate");
+        Logger.i("onCreate");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Logger.i(TAG, "onStartCommand");
+        Logger.i("onStartCommand");
         return START_STICKY;
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Logger.i(TAG, "onBind");
+        Logger.i("onBind");
         return mIBinder;
     }
 
     @Override
     public void onDestroy() {
-        Logger.i(TAG, "onDestroy");
+        Logger.i("onDestroy");
     }
 }

@@ -5,7 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 
 import com.domain.name.app.AppControl;
-import com.domain.name.app.ApplicationCus;
+import com.domain.name.app.ApplicationInstance;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -52,12 +52,12 @@ public class BaseView implements BaseContract.View {
 
     @Override
     public AppControl.View getAppView() {
-        return ApplicationCus.getAppView();
+        return ApplicationInstance.getAppView();
     }
 
     @Override
     public AppControl.Presenter getAppPresenter() {
-        return ApplicationCus.getAppPresenter();
+        return ApplicationInstance.getAppPresenter();
     }
 
     @Override

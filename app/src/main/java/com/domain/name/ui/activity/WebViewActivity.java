@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -15,6 +16,7 @@ import com.domain.name.base.BaseActivity;
 import com.domain.name.ui.js.JavaScript;
 import com.liux.abstracts.titlebar.DefaultTitleBar;
 import com.liux.view.SingleToast;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -48,6 +50,14 @@ public class WebViewActivity extends BaseActivity {
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
             setTitle(title);
+        }
+    };
+
+    private DownloadListener mDownloadListener = new DownloadListener() {
+        @Override
+        public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+            openExternalUrl(url, mimetype);
+            if (url.equals(mUrl)) finish();
         }
     };
 
@@ -101,9 +111,12 @@ public class WebViewActivity extends BaseActivity {
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setWebViewClient(mWebViewClient);
         mWebView.setWebChromeClient(mWebChromeClient);
+        mWebView.setDownloadListener(mDownloadListener);
         mWebView.addJavascriptInterface(mJavaScript, JavaScript.CLASS_NAME);
 
         initSetting();
+
+        CrashReport.setJavascriptMonitor(mWebView, true);
     }
 
     @Override
@@ -160,10 +173,10 @@ public class WebViewActivity extends BaseActivity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
     }
 
-    private void openExternalUrl(String uri) {
+    private void openExternalUrl(String url, String mimeType) {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(uri));
+            intent.setDataAndType(Uri.parse(url), mimeType);
             startActivity(intent);
         } catch (Exception e) {
             SingleToast.makeText(this, "没有找到对应的应用程序,打开链接失败", SingleToast.LENGTH_SHORT).show();

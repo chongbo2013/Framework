@@ -15,8 +15,8 @@ android {
         applicationId "com.domain.name"
         minSdkVersion MIN_SDK_VERSION as int
         targetSdkVersion TARGET_SDK_VERSION as int
-        versionCode 10000
-        versionName "1.0.0"
+        versionCode 1_00_00_0000
+        versionName "1.0.0.0000"
         multiDexEnabled true
         signingConfig signingConfigs.config
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -41,13 +41,10 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // ..\gradlew.bat build --refresh-dependencies
-    implementation 'com.liux:http:+'
-    implementation 'com.liux:view:+'
-    implementation 'com.liux:util:+'
-    implementation 'com.liux:other:+'
-    implementation 'com.liux:glide:+'
-    implementation 'com.liux:abstracts:+'
-    implementation 'com.liux:permission:+'
+    implementation 'com.liux:http:latest.release'
+    implementation 'com.liux:util:latest.release'
+    implementation 'com.liux:tool:latest.release'
+    implementation 'com.liux:abstracts:latest.release'
 
     implementation 'com.google.dagger:dagger:2.13'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
@@ -57,7 +54,12 @@ dependencies {
     })
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
+    implementation 'com.tencent.bugly:crashreport:2.6.6.1'
+
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4'
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
