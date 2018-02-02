@@ -5,7 +5,7 @@
 - use Global configuration
 - add Proguard script
 - add Git and SVN ignore
-- add Maven mirror from <http://maven.lx0758.cc/>
+- add Maven mirror from <http://maven.6xyun.cn/>
 
 ## app
 - MVP_RxJava2_Retorfit2_Dagger2 结构的模板项目模块

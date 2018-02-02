@@ -9,7 +9,7 @@ public class URL {
     /**
      * Api路径
      */
-    public static final String URL_ROOT = "http://api.lx0758.cc/";
+    public static final String URL_ROOT = "http://api.6xyun.cn/";
 
     /**
      * 用户协议
