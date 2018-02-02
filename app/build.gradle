@@ -42,19 +42,16 @@ dependencies {
 
     // ..\gradlew.bat build --refresh-dependencies
     implementation 'com.liux:http:latest.release'
-    implementation 'com.liux:view:latest.release'
-    implementation 'com.liux:tool:latest.release'
     implementation 'com.liux:util:latest.release'
-    implementation 'com.liux:glide:latest.release'
+    implementation 'com.liux:tool:latest.release'
     implementation 'com.liux:abstracts:latest.release'
-    implementation 'com.liux:permission:latest.release'
 
     implementation ('com.jakewharton:butterknife:8.8.1', {
         exclude group: 'com.android.support',module: 'appcompat-v7'
     })
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
-    implementation 'com.tencent.bugly:crashreport:latest.release'
+    implementation 'com.tencent.bugly:crashreport:2.6.6.1'
 
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4'
 
