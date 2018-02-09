@@ -44,6 +44,7 @@ dependencies {
     implementation 'com.liux:http:latest.release'
     implementation 'com.liux:util:latest.release'
     implementation 'com.liux:tool:latest.release'
+    implementation 'com.liux:view:latest.release'
     implementation 'com.liux:abstracts:latest.release'
 
     implementation ('com.jakewharton:butterknife:8.8.1', {
