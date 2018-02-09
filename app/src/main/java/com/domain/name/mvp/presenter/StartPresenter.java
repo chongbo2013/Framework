@@ -4,7 +4,7 @@ import com.domain.name.base.BasePresenter;
 import com.domain.name.di.component.DaggerModelComponent;
 import com.domain.name.di.model.ModelsModel;
 import com.domain.name.mvp.contract.StartContract;
-import com.domain.name.mvp.model.impl.DiskModelImpl;
+import com.domain.name.mvp.model.DiskModel;
 import com.liux.util.AppUtil;
 
 import javax.inject.Inject;
@@ -16,7 +16,7 @@ import javax.inject.Inject;
 public class StartPresenter extends BasePresenter<StartContract.View> implements StartContract.Presenter {
 
     @Inject
-    DiskModelImpl mDiskModelImpl;
+    DiskModel mDiskModel;
 
     public StartPresenter(StartContract.View view) {
         super(view);
@@ -28,7 +28,7 @@ public class StartPresenter extends BasePresenter<StartContract.View> implements
 
     @Override
     public boolean showGuide() {
-        int guide_old = mDiskModelImpl.getGuide();
+        int guide_old = mDiskModel.getGuide();
         int guide_new = AppUtil.getVersionCode(getAppView().getContext());
         return guide_old != guide_new;
     }
@@ -36,6 +36,6 @@ public class StartPresenter extends BasePresenter<StartContract.View> implements
     @Override
     public void saveGuide() {
         int guide_new = AppUtil.getVersionCode(getAppView().getContext());
-        mDiskModelImpl.putGuide(guide_new);
+        mDiskModel.putGuide(guide_new);
     }
 }

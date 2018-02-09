@@ -5,7 +5,7 @@ import com.domain.name.base.BasePresenter;
 import com.domain.name.data.GeneralObserver;
 import com.domain.name.di.component.DaggerModelComponent;
 import com.domain.name.mvp.contract.HomeContract;
-import com.domain.name.mvp.model.impl.GeneralApiModelImpl;
+import com.domain.name.mvp.model.GeneralApiModel;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import javax.inject.Inject;
 public class HomePresenter extends BasePresenter<HomeContract.View> implements HomeContract.Presenter {
 
     @Inject
-    GeneralApiModelImpl mGeneralApiModelImpl;
+    GeneralApiModel mGeneralApiModel;
 
     public HomePresenter(HomeContract.View view) {
         super(view);
@@ -27,7 +27,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
     @Override
     public void loadBanner() {
-        mGeneralApiModelImpl.loadBanner(new GeneralObserver<List<JSONObject>>(this) {
+        mGeneralApiModel.loadBanner(new GeneralObserver<List<JSONObject>>(this) {
             @Override
             public void onSucceed(List<JSONObject> jsonObjects) {
                 getView().loadSucceed(jsonObjects);

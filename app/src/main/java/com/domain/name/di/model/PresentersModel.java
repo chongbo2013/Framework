@@ -25,12 +25,12 @@ public class PresentersModel {
     }
 
     @Provides
-    StartPresenter provideStart() {
+    StartPresenter provideStartPresenter() {
         return new StartPresenter((StartContract.View) mView);
     }
 
     @Provides
-    HomePresenter provideHome() {
+    HomePresenter provideHomePresenter() {
         return new HomePresenter((HomeContract.View) mView);
     }
 }
