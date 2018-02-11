@@ -1,12 +1,14 @@
 package com.domain.name.mvp.contract;
 
 import com.alibaba.fastjson.JSONObject;
-import com.domain.name.base.BaseContract;
+import com.domain.framework.base.BaseContract;
 
 import java.util.List;
 
 /**
- * Created by Liux on 2017/11/11.
+ * 2017/11/11
+ * By Liux
+ * lx0758@qq.com
  */
 
 public interface HomeContract {
@@ -18,7 +20,7 @@ public interface HomeContract {
         void loadFailure(String msg);
     }
 
-    interface Presenter extends BaseContract.Presenter {
+    interface Presenter extends BaseContract.Presenter<View> {
 
         void loadBanner();
     }

@@ -1,6 +1,5 @@
 package com.domain.name.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,7 @@ import android.widget.ImageView;
 
 import com.liux.util.ScreenUtil;
 import com.domain.name.R;
-import com.domain.name.base.BaseFragment;
+import com.domain.framework.base.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +16,9 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
- * Created by Liux on 2017/11/6.
+ * 2017/11/6
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class MainCenterFragment extends BaseFragment {

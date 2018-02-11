@@ -7,10 +7,12 @@ import android.view.ViewGroup;
 
 import com.liux.util.ScreenUtil;
 import com.domain.name.R;
-import com.domain.name.base.BaseFragment;
+import com.domain.framework.base.BaseFragment;
 
 /**
- * Created by Liux on 2017/11/6.
+ * 2017/11/6
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class MainCircleFragment extends BaseFragment {

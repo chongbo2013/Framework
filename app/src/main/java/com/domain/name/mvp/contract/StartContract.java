@@ -1,9 +1,11 @@
 package com.domain.name.mvp.contract;
 
-import com.domain.name.base.BaseContract;
+import com.domain.framework.base.BaseContract;
 
 /**
- * Created by Liux on 2017/12/15.
+ * 2017/12/15
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class StartContract {
@@ -12,7 +14,7 @@ public class StartContract {
 
     }
 
-    public interface Presenter extends BaseContract.Presenter {
+    public interface Presenter extends BaseContract.Presenter<View> {
 
         boolean showGuide();
 

@@ -7,7 +7,9 @@ import android.webkit.ValueCallback;
 import android.webkit.WebView;
 
 /**
- * Created by Liux on 2017/11/7.
+ * 2017/11/7
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class JavaScript {

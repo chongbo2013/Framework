@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 
 /**
- * Created by Liux on 2017/11/11.
+ * 2017/11/11
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class HandlerService extends IntentService {

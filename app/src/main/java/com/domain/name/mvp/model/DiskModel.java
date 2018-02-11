@@ -1,9 +1,11 @@
 package com.domain.name.mvp.model;
 
-import com.domain.name.base.BaseContract;
+import com.domain.framework.base.BaseContract;
 
 /**
- * Created by Liux on 2017/12/15.
+ * 2017/12/15
+ * By Liux
+ * lx0758@qq.com
  */
 
 public interface DiskModel extends BaseContract.Model {

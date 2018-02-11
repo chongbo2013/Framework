@@ -12,7 +12,9 @@ import android.widget.PopupWindow;
 import com.domain.name.R;
 
 /**
- * Created by Liux on 2017/11/11.
+ * 2017/11/11
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class GeneralPopup extends PopupWindow {

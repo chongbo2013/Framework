@@ -1,12 +1,14 @@
 package com.domain.name.jni;
 
 /**
- * Created by Liux on 2017/11/12.
+ * 2017/11/12
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class Encrypt {
 
-    public native String encode();
+    public native String encode(String string);
 
-    public native String decode();
+    public native String decode(String string);
 }

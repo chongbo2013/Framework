@@ -1,29 +1,30 @@
 package com.domain.name.mvp.model;
 
 import com.alibaba.fastjson.JSONObject;
-import com.domain.name.base.BaseContract;
-import com.domain.name.data.bean.ResultBean;
+import com.domain.name.mvp.model.bean.Resp;
 
 import java.io.File;
 import java.util.List;
 
-import io.reactivex.Observer;
+import io.reactivex.Observable;
 
 /**
- * Created by Liux on 2017/11/22.
+ * 2017/11/22
+ * By Liux
+ * lx0758@qq.com
  */
 
-public interface GeneralApiModel extends BaseContract.Model {
+public interface GeneralApiModel {
 
-    void loadBanner(Observer<List<JSONObject>> observer);
+    Observable<List<JSONObject>> loadBanner();
 
-    void uploadFile(File file, Observer<JSONObject> observer);
+    Observable<JSONObject> uploadFile(File file);
 
-    void uploadFile(String path, Observer<JSONObject> observer);
+    Observable<JSONObject> uploadFile(String path);
 
-    void uploadFiles(File[] files, Observer<List<JSONObject>> observer);
+    Observable<List<JSONObject>> uploadFiles(File[] files);
 
-    void uploadFiles(String[] paths, Observer<List<JSONObject>> observer);
+    Observable<List<JSONObject>> uploadFiles(String[] paths);
 
-    void submitCompanyInfo(String name, String tel, String linkman, int industry, String card_1, String card_2, String card_3, String license_1, String license_2, Observer<ResultBean> observer);
+    Observable<Resp> submitCompanyInfo(String name, String tel, String linkman, int industry, String card_1, String card_2, String card_3, String license_1, String license_2);
 }

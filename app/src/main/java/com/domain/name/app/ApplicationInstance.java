@@ -1,33 +1,31 @@
 package com.domain.name.app;
 
-import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.domain.framework.app.AppControl;
+import com.domain.framework.app.UIProvider;
+import com.domain.framework.base.BaseApplication;
 import com.domain.name.BuildConfig;
 import com.domain.name.app.control.LocalControl;
 import com.domain.name.app.control.RemoteControl;
-import com.domain.name.data.conf.URL;
+import com.domain.name.di.component.DaggerAppComponent;
+import com.domain.name.mvp.model.conf.URL;
 import com.liux.http.HttpClient;
 import com.liux.http.interceptor.HttpLoggingInterceptor;
 import com.liux.tool.Logger;
 import com.liux.util.AppUtil;
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
-import com.tencent.bugly.crashreport.CrashReport;
+
+import dagger.android.AndroidInjector;
+import dagger.android.support.DaggerApplication;
 
 /**
- * Created by Liux on 2017/8/17.
+ * 2017/8/17
+ * By Liux
+ * lx0758@qq.com
  */
 
-public class ApplicationInstance extends Application {
-
-    private static Context mContext;
-    private static RefWatcher mRefWatcher;
-
-    private static AppControl.View mView;
-    private static AppControl.Model mModel;
-    private static AppControl.Presenter mPresenter;
+public class ApplicationInstance extends BaseApplication {
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -39,48 +37,31 @@ public class ApplicationInstance extends Application {
     public void onCreate() {
         super.onCreate();
 
-        mContext = this.getApplicationContext();
-
         Logger.DEBUG = BuildConfig.DEBUG;
-        HttpClient.initialize(this, URL.URL_ROOT);
+        HttpClient.initialize(this, URL.URL_API);
         HttpClient.getInstance().setLoggingLevel(
                 BuildConfig.DEBUG ?
                         HttpLoggingInterceptor.Level.BODY :
                         HttpLoggingInterceptor.Level.NONE
         );
-        mRefWatcher = LeakCanary.install(this);
-        CrashReport.initCrashReport(getApplicationContext());
+    }
 
+    @Override
+    protected AppControl initAppControl() {
         if (AppUtil.isMainProcess(this)) {
-            LocalControl control = new LocalControl(this);
-            mView = control;
-            mModel = control;
-            mPresenter = control;
+            return new LocalControl();
         } else {
-            RemoteControl control = new RemoteControl(this);
-            mView = null;
-            mModel = null;
-            mPresenter = control;
+            return new RemoteControl();
         }
     }
 
-    public static Context getContext() {
-        return mContext;
+    @Override
+    protected UIProvider initUIProvide() {
+        return new UIProviderImpl();
     }
 
-    public static RefWatcher getRefWatcher() {
-        return mRefWatcher;
-    }
-
-    public static AppControl.View getAppView() {
-        return mView;
-    }
-
-    public static AppControl.Model getAppModel() {
-        return mModel;
-    }
-
-    public static AppControl.Presenter getAppPresenter() {
-        return mPresenter;
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder().create(this);
     }
 }

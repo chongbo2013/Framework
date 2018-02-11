@@ -3,11 +3,10 @@ package com.domain.name.mvp.model.impl;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.domain.name.base.BaseModel;
-import com.domain.name.data.api.GeneralApi;
-import com.domain.name.data.bean.ResultBean;
+import com.domain.framework.base.BaseModel;
 import com.domain.name.mvp.model.GeneralApiModel;
-import com.liux.http.HttpClient;
+import com.domain.name.mvp.model.api.GeneralApi;
+import com.domain.name.mvp.model.bean.Resp;
 import com.liux.http.HttpUtil;
 
 import java.io.File;
@@ -16,79 +15,84 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.MultipartBody;
 
 /**
- * Created by Liux on 2017/11/22.
+ * 2017/11/22
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
-    @Override
-    public void loadBanner(Observer<List<JSONObject>> observer) {
-        HttpClient.getInstance().getService(GeneralApi.class).industry("hangye")
-                .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
-    }
+    
+    @Inject
+    GeneralApi mGeneralApi;
 
     @Override
-    public void uploadFile(File file, Observer<JSONObject> observer) {
-        MultipartBody.Part part = HttpUtil.parsePart("files[]", file);
-        HttpClient.getInstance().getService(GeneralApi.class).uploadFile(part)
-                .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
-                .map(new Function<List<JSONObject>, JSONObject>() {
+    public Observable<List<JSONObject>> loadBanner() {
+        return mGeneralApi.industry("hangye")
+                .map(new Function<Resp<String>, List<JSONObject>>() {
                     @Override
-                    public JSONObject apply(List<JSONObject> jsonObjects) throws Exception {
-                        return jsonObjects.get(0);
+                    public List<JSONObject> apply(Resp<String> stringResp) throws Exception {
+                        return new ArrayList<>();
                     }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+                });
     }
 
     @Override
-    public void uploadFile(String path, Observer<JSONObject> observer) {
-        uploadFile(new File(path), observer);
+    public Observable<JSONObject> uploadFile(File file) {
+        MultipartBody.Part part = HttpUtil.parsePart("files[]", file);
+        return mGeneralApi.uploadFile(part)
+                .map(new Function<Resp<List<JSONObject>>, JSONObject>() {
+                    @Override
+                    public JSONObject apply(Resp<List<JSONObject>> listResp) throws Exception {
+                        return listResp.getData().get(0);
+                    }
+                });
     }
 
     @Override
-    public void uploadFiles(File[] files, Observer<List<JSONObject>> observer) {
+    public Observable<JSONObject> uploadFile(String path) {
+        return uploadFile(new File(path));
+    }
+
+    @Override
+    public Observable<List<JSONObject>> uploadFiles(File[] files) {
         List<MultipartBody.Part> parts = new ArrayList<>();
         for (File file : files) {
             parts.add(HttpUtil.parsePart("files[]", file));
         }
-        HttpClient.getInstance().getService(GeneralApi.class).uploadFiles(parts)
-                .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+        return mGeneralApi.uploadFiles(parts)
+                .map(new Function<Resp<List<JSONObject>>, List<JSONObject>>() {
+                    @Override
+                    public List<JSONObject> apply(Resp<List<JSONObject>> listResp) throws Exception {
+                        return listResp.getData();
+                    }
+                });
     }
 
     @Override
-    public void uploadFiles(String[] paths, Observer<List<JSONObject>> observer) {
+    public Observable<List<JSONObject>> uploadFiles(String[] paths) {
         File[] files = new File[paths.length];
         for (int i = 0; i < paths.length; i++) {
             files[i] = new File(paths[i]);
         }
-        uploadFiles(files, observer);
+        return uploadFiles(files);
     }
 
     @Override
-    public void submitCompanyInfo(String name, final String tel, String linkman, int industry, final String card_1, final String card_2, final String card_3, final String license_1, final String license_2, Observer<ResultBean> observer) {
+    public Observable<Resp> submitCompanyInfo(String name, final String tel, String linkman, int industry, final String card_1, final String card_2, final String card_3, final String license_1, final String license_2) {
         Map<String, String> data = new HashMap<>();
         data.put("company", name);
         data.put("realname", linkman);
         data.put("telphone", tel);
         data.put("category_id", String.valueOf(industry));
-        Observable.just(data)
+        return Observable.just(data)
                 .switchMap(new Function<Map<String, String>, ObservableSource<Map<String, String>>>() {
                     @Override
                     public ObservableSource<Map<String, String>> apply(final Map<String, String> stringStringMap) throws Exception {
@@ -96,12 +100,11 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         if (TextUtils.isEmpty(file)) {
                             return Observable.just(stringStringMap);
                         }
-                        return HttpClient.getInstance().getService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
-                                .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
-                                .map(new Function<List<JSONObject>, String>() {
+                        return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                                .map(new Function<Resp<List<JSONObject>>, String>() {
                                     @Override
-                                    public String apply(List<JSONObject> jsonObjects) throws Exception {
-                                        return jsonObjects.get(0).getString("id");
+                                    public String apply(Resp<List<JSONObject>> listResp) throws Exception {
+                                        return listResp.getData().get(0).getString("id");
                                     }
                                 })
                                 .map(new Function<String, Map<String, String>>() {
@@ -120,12 +123,11 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         if (TextUtils.isEmpty(file)) {
                             return Observable.just(stringStringMap);
                         }
-                        return HttpClient.getInstance().getService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
-                                .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
-                                .map(new Function<List<JSONObject>, String>() {
+                        return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                                .map(new Function<Resp<List<JSONObject>>, String>() {
                                     @Override
-                                    public String apply(List<JSONObject> jsonObjects) throws Exception {
-                                        return jsonObjects.get(0).getString("id");
+                                    public String apply(Resp<List<JSONObject>> listResp) throws Exception {
+                                        return listResp.getData().get(0).getString("id");
                                     }
                                 })
                                 .map(new Function<String, Map<String, String>>() {
@@ -144,12 +146,11 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         if (TextUtils.isEmpty(file)) {
                             return Observable.just(stringStringMap);
                         }
-                        return HttpClient.getInstance().getService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
-                                .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
-                                .map(new Function<List<JSONObject>, String>() {
+                        return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                                .map(new Function<Resp<List<JSONObject>>, String>() {
                                     @Override
-                                    public String apply(List<JSONObject> jsonObjects) throws Exception {
-                                        return jsonObjects.get(0).getString("id");
+                                    public String apply(Resp<List<JSONObject>> listResp) throws Exception {
+                                        return listResp.getData().get(0).getString("id");
                                     }
                                 })
                                 .map(new Function<String, Map<String, String>>() {
@@ -168,12 +169,11 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         if (TextUtils.isEmpty(file)) {
                             return Observable.just(stringStringMap);
                         }
-                        return HttpClient.getInstance().getService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
-                                .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
-                                .map(new Function<List<JSONObject>, String>() {
+                        return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                                .map(new Function<Resp<List<JSONObject>>, String>() {
                                     @Override
-                                    public String apply(List<JSONObject> jsonObjects) throws Exception {
-                                        return jsonObjects.get(0).getString("id");
+                                    public String apply(Resp<List<JSONObject>> listResp) throws Exception {
+                                        return listResp.getData().get(0).getString("id");
                                     }
                                 })
                                 .map(new Function<String, Map<String, String>>() {
@@ -192,12 +192,11 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         if (TextUtils.isEmpty(file)) {
                             return Observable.just(stringStringMap);
                         }
-                        return HttpClient.getInstance().getService(GeneralApi.class).uploadFile(HttpUtil.parsePart("files[]", new File(file)))
-                                .map(new ArrayDataHandle<JSONObject>(JSONObject.class))
-                                .map(new Function<List<JSONObject>, String>() {
+                        return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                                .map(new Function<Resp<List<JSONObject>>, String>() {
                                     @Override
-                                    public String apply(List<JSONObject> jsonObjects) throws Exception {
-                                        return jsonObjects.get(0).getString("id");
+                                    public String apply(Resp<List<JSONObject>> listResp) throws Exception {
+                                        return listResp.getData().get(0).getString("id");
                                     }
                                 })
                                 .map(new Function<String, Map<String, String>>() {
@@ -209,15 +208,11 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                                 });
                     }
                 })
-                .switchMap(new Function<Map<String, String>, ObservableSource<ResultBean>>() {
+                .switchMap(new Function<Map<String, String>, ObservableSource<Resp>>() {
                     @Override
-                    public ObservableSource<ResultBean> apply(final Map<String, String> stringStringMap) throws Exception {
-                        return HttpClient.getInstance().getService(GeneralApi.class).submitCompanyInfo(stringStringMap);
+                    public ObservableSource<Resp> apply(final Map<String, String> stringStringMap) throws Exception {
+                        return mGeneralApi.submitCompanyInfo(stringStringMap);
                     }
-                })
-                .map(new DataHandle())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+                });
     }
 }

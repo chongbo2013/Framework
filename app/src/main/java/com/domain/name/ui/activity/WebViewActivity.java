@@ -12,7 +12,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.domain.name.base.BaseActivity;
+import com.domain.framework.base.BaseActivity;
 import com.domain.name.ui.js.JavaScript;
 import com.liux.abstracts.titlebar.DefaultTitleBar;
 import com.liux.view.SingleToast;

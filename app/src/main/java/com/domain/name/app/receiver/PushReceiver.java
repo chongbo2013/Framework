@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * Created by Liux on 2017/11/11.
+ * 2017/11/11
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class PushReceiver extends BroadcastReceiver {

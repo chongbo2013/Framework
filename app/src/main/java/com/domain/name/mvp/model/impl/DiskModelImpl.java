@@ -3,16 +3,17 @@ package com.domain.name.mvp.model.impl;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.domain.name.base.BaseModel;
+import com.domain.framework.base.BaseModel;
 import com.domain.name.mvp.model.DiskModel;
 
 /**
- * Created by Liux on 2017/12/15.
+ * 2017/12/15
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class DiskModelImpl extends BaseModel implements DiskModel {
     private static final String FILE_XML = "config";
-
     private static final String KEY_GUIDE = "GUIDE";
 
     private SharedPreferences mSharedPreferences;

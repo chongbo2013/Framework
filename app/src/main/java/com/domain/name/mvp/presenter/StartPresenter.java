@@ -1,8 +1,8 @@
 package com.domain.name.mvp.presenter;
 
-import com.domain.name.base.BasePresenter;
-import com.domain.name.di.component.DaggerModelComponent;
-import com.domain.name.di.model.ModelsModel;
+import android.content.Context;
+
+import com.domain.framework.base.BasePresenter;
 import com.domain.name.mvp.contract.StartContract;
 import com.domain.name.mvp.model.DiskModel;
 import com.liux.util.AppUtil;
@@ -10,32 +10,32 @@ import com.liux.util.AppUtil;
 import javax.inject.Inject;
 
 /**
- * Created by Liux on 2017/12/15.
+ * 2017/12/15
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class StartPresenter extends BasePresenter<StartContract.View> implements StartContract.Presenter {
 
     @Inject
+    Context mContext;
+    @Inject
     DiskModel mDiskModel;
 
-    public StartPresenter(StartContract.View view) {
-        super(view);
-        DaggerModelComponent.builder()
-                .modelsModel(new ModelsModel(view.getAppView().getContext()))
-                .build()
-                .inject(this);
+    @Inject
+    public StartPresenter() {
     }
 
     @Override
     public boolean showGuide() {
         int guide_old = mDiskModel.getGuide();
-        int guide_new = AppUtil.getVersionCode(getAppView().getContext());
+        int guide_new = AppUtil.getVersionCode(mContext);
         return guide_old != guide_new;
     }
 
     @Override
     public void saveGuide() {
-        int guide_new = AppUtil.getVersionCode(getAppView().getContext());
+        int guide_new = AppUtil.getVersionCode(mContext);
         mDiskModel.putGuide(guide_new);
     }
 }

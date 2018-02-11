@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.domain.name.ui.adapter.TabAdapter;
 import com.domain.name.R;
-import com.domain.name.base.BaseActivity;
+import com.domain.framework.base.BaseActivity;
 import com.domain.name.ui.fragment.MainCenterFragment;
 import com.domain.name.ui.fragment.MainCircleFragment;
 import com.domain.name.ui.fragment.MainHomeFragment;

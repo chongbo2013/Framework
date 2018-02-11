@@ -5,7 +5,9 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Created by Liux on 2017/12/12.
+ * 2017/12/12
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class NoneView extends View {
@@ -20,9 +22,5 @@ public class NoneView extends View {
 
     public NoneView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    public NoneView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 }

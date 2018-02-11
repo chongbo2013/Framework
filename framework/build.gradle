@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion COMPILE_SDK_VERSION as int
+    buildToolsVersion BUILD_TOOLS_VERSION as String
+    defaultConfig {
+        minSdkVersion MIN_SDK_VERSION as int
+        targetSdkVersion TARGET_SDK_VERSION as int
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
+    // ..\gradlew.bat build --refresh-dependencies
+    api 'com.liux:http:latest.release'
+    api 'com.liux:util:latest.release'
+    api 'com.liux:tool:latest.release'
+    api 'com.liux:view:latest.release'
+    api 'com.liux:abstracts:latest.release'
+
+    api "com.google.dagger:dagger:2.14.1"
+    api "com.google.dagger:dagger-android:2.14.1"
+    api "com.google.dagger:dagger-android-support:2.14.1"
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
+    annotationProcessor "com.google.dagger:dagger-android-processor:2.14.1"
+
+    api ('com.jakewharton:butterknife:8.8.1', {
+        exclude group: 'com.android.support',module: 'appcompat-v7'
+    })
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    api 'com.orhanobut:logger:2.1.1'
+
+    api 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
+    api 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
+
+    api 'com.tencent.bugly:crashreport:2.6.6.1'
+
+    api 'com.mobsandgeeks:android-saripaar:2.0.3'
+
+    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4'
+
+    debugApi 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+
+    testApi 'junit:junit:4.12'
+    androidTestApi 'com.android.support.test:runner:1.0.1'
+    androidTestApi 'com.android.support.test.espresso:espresso-core:3.0.1'
+}

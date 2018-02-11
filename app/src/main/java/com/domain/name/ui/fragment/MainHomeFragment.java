@@ -6,13 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONObject;
-import com.domain.name.di.component.DaggerPresenterComponent;
-import com.domain.name.di.model.PresentersModel;
 import com.domain.name.mvp.contract.HomeContract;
 import com.domain.name.mvp.presenter.HomePresenter;
 import com.liux.util.ScreenUtil;
 import com.domain.name.R;
-import com.domain.name.base.BaseFragment;
+import com.domain.framework.base.BaseFragment;
 import com.domain.name.ui.activity.WebViewActivity;
 import com.liux.view.SingleToast;
 
@@ -28,19 +26,13 @@ import butterknife.Unbinder;
  * Created by Liux on 2017/11/6.
  */
 
-public class MainHomeFragment extends BaseFragment implements HomeContract.View {
-
-    @Inject
-    HomePresenter mHomePresenter;
+public class MainHomeFragment extends BaseFragment<HomeContract.Presenter> implements HomeContract.View {
 
     Unbinder unbinder;
 
     @Override
     protected void onInitData(Bundle savedInstanceState) {
-        DaggerPresenterComponent.builder()
-                .presentersModel(PresentersModel.create(this))
-                .build()
-                .inject(this);
+
     }
 
     @Override
@@ -53,7 +45,7 @@ public class MainHomeFragment extends BaseFragment implements HomeContract.View 
 
     @Override
     protected void onLazyLoad() {
-        mHomePresenter.loadBanner();
+        mPresenter.loadBanner();
     }
 
     @Override

@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.domain.name.base.BaseDialog;
-
 /**
  * Created by Liux on 2017/11/11.
  */
