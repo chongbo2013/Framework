@@ -5,30 +5,30 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 
+import com.domain.framework.base.BaseMvpActivity;
 import com.domain.name.R;
-import com.domain.framework.base.BaseActivity;
-import com.domain.framework.di.annotation.Target;
 import com.domain.name.mvp.contract.StartContract;
 import com.liux.abstracts.titlebar.TitleBar;
 import com.liux.abstracts.titlebar.TransparentTitleBar;
 
 import java.util.Map;
 
-import javax.inject.Inject;
-
 /**
- * Created by Liux on 2017/8/17.
+ * 2017/8/17
+ * By Liux
+ * lx0758@qq.com
  */
 
-public class LaunchActivity extends BaseActivity<StartContract.Presenter> implements StartContract.View {
+public class LaunchActivity extends BaseMvpActivity<StartContract.Presenter> implements StartContract.View {
 
     @Override
-    protected TitleBar onInitTitleBar() {
+    public TitleBar onInitTitleBar() {
         return new TransparentTitleBar(this);
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle bundle, Intent intent) {
+    protected void onCreate(@Nullable Bundle bundle) {
+        super.onCreate(bundle);
         setContentView(R.layout.activity_launch);
 
         new Handler().postDelayed(new Runnable() {
@@ -41,30 +41,5 @@ public class LaunchActivity extends BaseActivity<StartContract.Presenter> implem
                 finish();
             }
         }, 1000);
-    }
-
-    @Override
-    protected void onInitData(@Nullable Bundle bundle, Intent intent) {
-
-    }
-
-    @Override
-    protected void onInitView(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    protected void onRestoreData(Map<String, Object> map) {
-
-    }
-
-    @Override
-    protected void onLazyLoad() {
-
-    }
-
-    @Override
-    protected void onSaveData(Map<String, Object> map) {
-
     }
 }

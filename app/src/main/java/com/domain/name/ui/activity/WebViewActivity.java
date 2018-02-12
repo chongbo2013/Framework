@@ -22,7 +22,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Created by Liux on 2017/11/7.
+ * 2017/11/7
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class WebViewActivity extends BaseActivity {
@@ -80,7 +82,8 @@ public class WebViewActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState, Intent intent) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mWebView = new WebView(this);
         setContentView(mWebView);
     }
@@ -93,16 +96,18 @@ public class WebViewActivity extends BaseActivity {
     }
 
     @Override
-    protected void onRestoreData(Map<String, Object> data) {
+    public void onRestoreData(Map<String, Object> data) {
         mUrl = (String) data.get(PARAM_URL);
         mTitle = (Boolean) data.get(PARAM_TITLE);
         mHeader = (Map<String, String>) data.get(PARAM_HEADER);
     }
 
     @Override
-    protected void onInitView(@Nullable Bundle savedInstanceState) {
+    protected void onInitView() {
         if (!mTitle) {
             ((DefaultTitleBar) getTitleBar()).getView().setVisibility(View.GONE);
+        } else {
+            setTitle(mUrl);
         }
 
         mJavaScript = new JavaScript(this, mWebView);
@@ -120,7 +125,8 @@ public class WebViewActivity extends BaseActivity {
     }
 
     @Override
-    protected void onLazyLoad() {
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
         if (mHeader != null) {
             mWebView.loadUrl(mUrl, mHeader);
         } else {
@@ -129,7 +135,7 @@ public class WebViewActivity extends BaseActivity {
     }
 
     @Override
-    protected void onSaveData(Map<String, Object> data) {
+    public void onSaveData(Map<String, Object> data) {
         data.put(PARAM_URL, mUrl);
         data.put(PARAM_TITLE, mTitle);
         data.put(PARAM_HEADER, mHeader);

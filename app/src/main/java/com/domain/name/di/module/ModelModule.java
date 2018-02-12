@@ -2,16 +2,16 @@ package com.domain.name.di.module;
 
 import android.content.Context;
 
-import com.domain.name.mvp.model.DiskModel;
-import com.domain.name.mvp.model.GeneralApiModel;
-import com.domain.name.mvp.model.impl.DiskModelImpl;
-import com.domain.name.mvp.model.impl.GeneralApiModelImpl;
+import com.domain.name.mvp.model.*;
+import com.domain.name.mvp.model.impl.*;
 
 import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by Liux on 2017/12/15.
+ * 2017/12/15
+ * By Liux
+ * lx0758@qq.com
  */
 
 @Module(includes = ApiModule.class)

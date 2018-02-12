@@ -1,6 +1,6 @@
 package com.domain.name.di.module;
 
-import com.domain.name.mvp.model.api.GeneralApi;
+import com.domain.name.mvp.model.api.*;
 import com.liux.http.HttpClient;
 
 import javax.inject.Singleton;

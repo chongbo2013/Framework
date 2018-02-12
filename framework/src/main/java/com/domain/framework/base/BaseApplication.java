@@ -1,6 +1,12 @@
 package com.domain.framework.base;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Application;
+import android.app.Fragment;
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.ContentProvider;
 import android.content.Context;
 
 import com.domain.framework.app.AppControl;
@@ -9,7 +15,16 @@ import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.tencent.bugly.crashreport.CrashReport;
 
-import dagger.android.support.DaggerApplication;
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
+import dagger.android.HasBroadcastReceiverInjector;
+import dagger.android.HasContentProviderInjector;
+import dagger.android.HasFragmentInjector;
+import dagger.android.HasServiceInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 
 /**
  * 2018/2/11
@@ -17,7 +32,23 @@ import dagger.android.support.DaggerApplication;
  * lx0758@qq.com
  */
 
-public abstract class BaseApplication extends DaggerApplication {
+public abstract class BaseApplication extends Application
+        implements HasActivityInjector, HasFragmentInjector, HasServiceInjector,
+        HasBroadcastReceiverInjector, HasContentProviderInjector, HasSupportFragmentInjector {
+
+    private volatile boolean mNeedToInject = true;
+    @Inject
+    DispatchingAndroidInjector<Activity> mActivityInjector;
+    @Inject
+    DispatchingAndroidInjector<BroadcastReceiver> mBroadcastReceiverInjector;
+    @Inject
+    DispatchingAndroidInjector<Fragment> mFragmentInjector;
+    @Inject
+    DispatchingAndroidInjector<Service> mServiceInjector;
+    @Inject
+    DispatchingAndroidInjector<ContentProvider> mContentProviderInjector;
+    @Inject
+    DispatchingAndroidInjector<android.support.v4.app.Fragment> mSupportFragmentInjector;
 
     @SuppressLint("StaticFieldLeak")
     private static Context mContext;
@@ -31,6 +62,8 @@ public abstract class BaseApplication extends DaggerApplication {
     public void onCreate() {
         super.onCreate();
 
+        injectIfNecessary();
+
         mContext = getApplicationContext();
 
         mAppControl = initAppControl();
@@ -40,10 +73,6 @@ public abstract class BaseApplication extends DaggerApplication {
 
         CrashReport.initCrashReport(getApplicationContext());
     }
-
-    protected abstract AppControl initAppControl();
-
-    protected abstract UIProvider initUIProvide();
 
     public static Context getContext() {
         return mContext;
@@ -59,5 +88,65 @@ public abstract class BaseApplication extends DaggerApplication {
 
     public static RefWatcher getRefWatcher() {
         return mRefWatcher;
+    }
+
+    protected abstract AppControl initAppControl();
+
+    protected abstract UIProvider initUIProvide();
+
+    @Inject
+    void setInjected() {
+        mNeedToInject = false;
+    }
+
+    @Override
+    public DispatchingAndroidInjector<Activity> activityInjector() {
+        return mActivityInjector;
+    }
+
+    @Override
+    public DispatchingAndroidInjector<Fragment> fragmentInjector() {
+        return mFragmentInjector;
+    }
+
+    @Override
+    public DispatchingAndroidInjector<BroadcastReceiver> broadcastReceiverInjector() {
+        return mBroadcastReceiverInjector;
+    }
+
+    @Override
+    public DispatchingAndroidInjector<Service> serviceInjector() {
+        return mServiceInjector;
+    }
+
+    @Override
+    public AndroidInjector<ContentProvider> contentProviderInjector() {
+        injectIfNecessary();
+        return mContentProviderInjector;
+    }
+
+    @Override
+    public DispatchingAndroidInjector<android.support.v4.app.Fragment> supportFragmentInjector() {
+        return mSupportFragmentInjector;
+    }
+
+    protected abstract AndroidInjector<? extends BaseApplication> applicationInjector();
+
+    private void injectIfNecessary() {
+        if (mNeedToInject) {
+            synchronized (this) {
+                if (mNeedToInject) {
+                    @SuppressWarnings("unchecked")
+                    AndroidInjector<BaseApplication> applicationInjector =
+                            (AndroidInjector<BaseApplication>) applicationInjector();
+                    applicationInjector.inject(this);
+                    if (mNeedToInject) {
+                        throw new IllegalStateException(
+                                "The AndroidInjector returned from applicationInjector() did not inject the "
+                                        + getClass());
+                    }
+                }
+            }
+        }
     }
 }

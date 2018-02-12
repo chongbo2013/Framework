@@ -1,9 +1,6 @@
 package com.domain.name.di.module;
 
-import com.domain.framework.base.BaseActivity;
-import com.domain.name.ui.activity.GuideActivity;
-import com.domain.name.ui.activity.LaunchActivity;
-import com.domain.name.ui.activity.MainActivity;
+import com.domain.name.ui.activity.*;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -18,8 +15,14 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class ActivityModule {
 
     @ContributesAndroidInjector
+    abstract WebViewActivity webViewActivityInjector();
+
+    @ContributesAndroidInjector
     abstract LaunchActivity launchActivityInjector();
 
     @ContributesAndroidInjector
     abstract GuideActivity guideActivityInjector();
+
+    @ContributesAndroidInjector
+    abstract MainActivity mainActivityInjector();
 }

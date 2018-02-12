@@ -28,7 +28,7 @@ dependencies {
     api 'com.liux:util:latest.release'
     api 'com.liux:tool:latest.release'
     api 'com.liux:view:latest.release'
-    api 'com.liux:abstracts:latest.release'
+    api 'com.liux:abstracts:0.2.4'
 
     api "com.google.dagger:dagger:2.14.1"
     api "com.google.dagger:dagger-android:2.14.1"
@@ -41,14 +41,10 @@ dependencies {
     })
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
-    api 'com.orhanobut:logger:2.1.1'
+    api 'com.tencent.bugly:crashreport:2.6.6.1'
 
     api 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
     api 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
-
-    api 'com.tencent.bugly:crashreport:2.6.6.1'
-
-    api 'com.mobsandgeeks:android-saripaar:2.0.3'
 
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4'
 

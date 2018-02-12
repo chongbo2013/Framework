@@ -9,7 +9,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 /**
- * Created by Liux on 2017/11/11.
+ * 2017/11/11
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class MessageDialog extends BaseDialog<MessageDialog> {

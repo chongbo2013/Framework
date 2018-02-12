@@ -1,20 +1,12 @@
 package com.domain.framework.base;
 
-import android.app.Activity;
-import android.app.Application;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.domain.framework.app.UIProvider;
 import com.liux.abstracts.AbstractsActivity;
-import com.mobsandgeeks.saripaar.Rule;
-import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.Validator;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -31,11 +23,9 @@ import dagger.android.support.HasSupportFragmentInjector;
  * lx0758@qq.com
  */
 
-public abstract class BaseActivity<P extends BaseContract.Presenter> extends AbstractsActivity
-        implements BaseContract.View, Validator.ValidationListener, HasFragmentInjector, HasSupportFragmentInjector {
+public abstract class BaseActivity extends AbstractsActivity
+        implements HasFragmentInjector, HasSupportFragmentInjector {
 
-    @Inject
-    protected P mPresenter;
     @Inject
     protected UIProvider mUiProvider;
     @Inject
@@ -43,24 +33,20 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Abs
     @Inject
     DispatchingAndroidInjector<android.support.v4.app.Fragment> mSupportFragmentInjector;
 
-    protected Validator mValidator;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
 
-        super.onCreate(savedInstanceState);
+        onInitData(savedInstanceState, getIntent());
 
-        mValidator = new Validator(this);
-        mValidator.setValidationListener(this);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
-    protected void onInitViewFinish() {
-        if (mPresenter != null) {
-            mPresenter.bindView(this);
-        }
+    public void onContentChanged() {
+        super.onContentChanged();
         ButterKnife.bind(this);
+        onInitView();
     }
 
     @Override
@@ -73,32 +59,11 @@ public abstract class BaseActivity<P extends BaseContract.Presenter> extends Abs
         return mSupportFragmentInjector;
     }
 
-    @Override
-    public void onValidationSucceeded() {
+    protected void onInitData(@Nullable Bundle savedInstanceState, Intent intent) {
 
     }
 
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-        if (!errors.isEmpty()) {
-            ValidationError error = errors.get(0);
-            List<Rule> rules = error.getFailedRules();
-            if (rules != null && !rules.isEmpty()) {
-                String message = rules.get(0).getMessage(this);
-                View view = error.getView();
-                boolean isNeedToast = true;
-                if (view instanceof TextView) {
-                    ((TextView) view).setError(message);
-                    if (view instanceof EditText && view.isEnabled()) {
-                        view.requestFocus();
-                        isNeedToast = false;
-                    }
-                }
+    protected void onInitView() {
 
-                if(isNeedToast) {
-                    mUiProvider.provideIToast().showError(message);
-                }
-            }
-        }
     }
 }

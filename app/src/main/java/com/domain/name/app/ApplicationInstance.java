@@ -1,5 +1,6 @@
 package com.domain.name.app;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
@@ -17,7 +18,6 @@ import com.liux.tool.Logger;
 import com.liux.util.AppUtil;
 
 import dagger.android.AndroidInjector;
-import dagger.android.support.DaggerApplication;
 
 /**
  * 2017/8/17
@@ -47,6 +47,11 @@ public class ApplicationInstance extends BaseApplication {
     }
 
     @Override
+    protected AndroidInjector<? extends BaseApplication> applicationInjector() {
+        return DaggerAppComponent.builder().create(this);
+    }
+
+    @Override
     protected AppControl initAppControl() {
         if (AppUtil.isMainProcess(this)) {
             return new LocalControl();
@@ -58,10 +63,5 @@ public class ApplicationInstance extends BaseApplication {
     @Override
     protected UIProvider initUIProvide() {
         return new UIProviderImpl();
-    }
-
-    @Override
-    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        return DaggerAppComponent.builder().create(this);
     }
 }

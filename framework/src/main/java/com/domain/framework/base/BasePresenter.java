@@ -1,7 +1,5 @@
 package com.domain.framework.base;
 
-import javax.inject.Inject;
-
 /**
  * 2017/8/17
  * By Liux

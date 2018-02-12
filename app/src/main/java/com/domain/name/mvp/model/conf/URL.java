@@ -1,7 +1,9 @@
 package com.domain.name.mvp.model.conf;
 
 /**
- * Created by Liux on 2017/11/6.
+ * 2017/11/6
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class URL {

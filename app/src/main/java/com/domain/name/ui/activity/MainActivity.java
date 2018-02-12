@@ -1,6 +1,5 @@
 package com.domain.name.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,14 +18,13 @@ import com.domain.name.ui.fragment.MainServerFragment;
 import com.liux.abstracts.titlebar.TitleBar;
 import com.liux.abstracts.titlebar.TransparentTitleBar;
 
-import java.util.Map;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Liux on 2017/11/6.
+ * 2017/11/6
+ * By Liux
+ * lx0758@qq.com
  */
 
 public class MainActivity extends BaseActivity {
@@ -62,23 +60,18 @@ public class MainActivity extends BaseActivity {
     };
 
     @Override
-    protected TitleBar onInitTitleBar() {
+    public TitleBar onInitTitleBar() {
         return new TransparentTitleBar(this);
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState, Intent intent) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
     }
 
     @Override
-    protected void onInitData(@Nullable Bundle savedInstanceState, Intent intent) {
-
-    }
-
-    @Override
-    protected void onInitView(@Nullable Bundle savedInstanceState) {
+    protected void onInitView() {
         vpContent.setOffscreenPageLimit(4);
         vpContent.setAdapter(new TabAdapter(getSupportFragmentManager(), mFragments));
         vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -98,21 +91,6 @@ public class MainActivity extends BaseActivity {
             }
         });
         changeTabButton(vpContent.getCurrentItem());
-    }
-
-    @Override
-    protected void onRestoreData(Map<String, Object> data) {
-
-    }
-
-    @Override
-    protected void onLazyLoad() {
-
-    }
-
-    @Override
-    protected void onSaveData(Map<String, Object> data) {
-
     }
 
     @OnClick({R.id.ll_shouye, R.id.ll_zhishiquan, R.id.ll_kefu, R.id.ll_wode})
