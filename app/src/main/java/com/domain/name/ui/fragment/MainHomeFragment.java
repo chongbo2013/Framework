@@ -6,18 +6,24 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.alibaba.fastjson.JSONObject;
 import com.domain.framework.base.BaseMvpFragment;
-import com.domain.name.mvp.contract.HomeContract;
-import com.liux.util.ScreenUtil;
 import com.domain.name.R;
+import com.domain.name.mvp.contract.HomeContract;
 import com.domain.name.ui.activity.WebViewActivity;
+import com.liux.util.ScreenUtil;
 import com.liux.view.SingleToast;
+import com.mobsandgeeks.saripaar.annotation.Url;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * 2017/11/6
@@ -27,6 +33,12 @@ import butterknife.OnClick;
 
 public class MainHomeFragment extends BaseMvpFragment<HomeContract.Presenter> implements HomeContract.View {
 
+    @Url(message = "请输入正确的网址")
+    @BindView(R.id.et_url)
+    EditText etUrl;
+    @BindView(R.id.btn_webview)
+    Button btnWebview;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,9 +47,18 @@ public class MainHomeFragment extends BaseMvpFragment<HomeContract.Presenter> im
         return rootView;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        addIgnoreView(btnWebview);
+    }
+
     @OnClick(R.id.btn_webview)
     public void onViewClicked() {
-        WebViewActivity.startWebView(getContext(), "http://6xyun.cn");
+        getValidator().setViewValidatedAction(view -> {
+            WebViewActivity.startWebView(getContext(), etUrl.getText().toString());
+        });
+        getValidator().validate();
     }
 
     @Override

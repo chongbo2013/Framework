@@ -28,7 +28,7 @@ dependencies {
     api 'com.liux:util:latest.release'
     api 'com.liux:tool:latest.release'
     api 'com.liux:view:latest.release'
-    api 'com.liux:abstracts:0.2.4'
+    api 'com.liux:abstracts:latest.release'
 
     api "com.google.dagger:dagger:2.14.1"
     api "com.google.dagger:dagger-android:2.14.1"
