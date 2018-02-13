@@ -21,9 +21,7 @@ import com.mobsandgeeks.saripaar.annotation.Url;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * 2017/11/6
@@ -50,7 +48,10 @@ public class MainHomeFragment extends BaseMvpFragment<HomeContract.Presenter> im
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         addIgnoreView(btnWebview);
+
+        mPresenter.loadBanner();
     }
 
     @OnClick(R.id.btn_webview)

@@ -13,9 +13,7 @@ import com.domain.name.R;
 import com.domain.framework.base.BaseFragment;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * 2017/11/6

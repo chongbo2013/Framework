@@ -23,6 +23,9 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
     @Override
     public void loadBanner() {
-        mGeneralApiModel.loadBanner();
+        mGeneralApiModel.loadBanner()
+                .compose()
+                .compose()
+                .sub;
     }
 }

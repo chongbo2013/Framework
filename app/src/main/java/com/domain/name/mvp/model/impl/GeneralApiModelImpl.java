@@ -36,24 +36,14 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
     @Override
     public Observable<List<JSONObject>> loadBanner() {
         return mGeneralApi.industry("hangye")
-                .map(new Function<Resp<String>, List<JSONObject>>() {
-                    @Override
-                    public List<JSONObject> apply(Resp<String> stringResp) throws Exception {
-                        return new ArrayList<>();
-                    }
-                });
+                .map(stringResp -> new ArrayList<>());
     }
 
     @Override
     public Observable<JSONObject> uploadFile(File file) {
         MultipartBody.Part part = HttpUtil.parsePart("files[]", file);
         return mGeneralApi.uploadFile(part)
-                .map(new Function<Resp<List<JSONObject>>, JSONObject>() {
-                    @Override
-                    public JSONObject apply(Resp<List<JSONObject>> listResp) throws Exception {
-                        return listResp.getData().get(0);
-                    }
-                });
+                .map(listResp -> listResp.getData().get(0));
     }
 
     @Override
@@ -68,12 +58,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
             parts.add(HttpUtil.parsePart("files[]", file));
         }
         return mGeneralApi.uploadFiles(parts)
-                .map(new Function<Resp<List<JSONObject>>, List<JSONObject>>() {
-                    @Override
-                    public List<JSONObject> apply(Resp<List<JSONObject>> listResp) throws Exception {
-                        return listResp.getData();
-                    }
-                });
+                .map(Resp::getData);
     }
 
     @Override
@@ -93,126 +78,66 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
         data.put("telphone", tel);
         data.put("category_id", String.valueOf(industry));
         return Observable.just(data)
-                .switchMap(new Function<Map<String, String>, ObservableSource<Map<String, String>>>() {
-                    @Override
-                    public ObservableSource<Map<String, String>> apply(final Map<String, String> stringStringMap) throws Exception {
-                        String file = card_1;
-                        if (TextUtils.isEmpty(file)) {
-                            return Observable.just(stringStringMap);
-                        }
-                        return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
-                                .map(new Function<Resp<List<JSONObject>>, String>() {
-                                    @Override
-                                    public String apply(Resp<List<JSONObject>> listResp) throws Exception {
-                                        return listResp.getData().get(0).getString("id");
-                                    }
-                                })
-                                .map(new Function<String, Map<String, String>>() {
-                                    @Override
-                                    public Map<String, String> apply(String s) throws Exception {
-                                        stringStringMap.put("card_front_id", s);
-                                        return stringStringMap;
-                                    }
-                                });
+                .switchMap(stringStringMap -> {
+                    String file = card_1;
+                    if (TextUtils.isEmpty(file)) {
+                        return Observable.just(stringStringMap);
                     }
+                    return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                            .map(listResp -> listResp.getData().get(0).getString("id"))
+                            .map(s -> {
+                                stringStringMap.put("card_front_id", s);
+                                return stringStringMap;
+                            });
                 })
-                .switchMap(new Function<Map<String, String>, ObservableSource<Map<String, String>>>() {
-                    @Override
-                    public ObservableSource<Map<String, String>> apply(final Map<String, String> stringStringMap) throws Exception {
-                        String file = card_2;
-                        if (TextUtils.isEmpty(file)) {
-                            return Observable.just(stringStringMap);
-                        }
-                        return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
-                                .map(new Function<Resp<List<JSONObject>>, String>() {
-                                    @Override
-                                    public String apply(Resp<List<JSONObject>> listResp) throws Exception {
-                                        return listResp.getData().get(0).getString("id");
-                                    }
-                                })
-                                .map(new Function<String, Map<String, String>>() {
-                                    @Override
-                                    public Map<String, String> apply(String s) throws Exception {
-                                        stringStringMap.put("card_back_id", s);
-                                        return stringStringMap;
-                                    }
-                                });
+                .switchMap(stringStringMap -> {
+                    String file = card_2;
+                    if (TextUtils.isEmpty(file)) {
+                        return Observable.just(stringStringMap);
                     }
+                    return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                            .map(listResp -> listResp.getData().get(0).getString("id"))
+                            .map(s -> {
+                                stringStringMap.put("card_back_id", s);
+                                return stringStringMap;
+                            });
                 })
-                .switchMap(new Function<Map<String, String>, ObservableSource<Map<String, String>>>() {
-                    @Override
-                    public ObservableSource<Map<String, String>> apply(final Map<String, String> stringStringMap) throws Exception {
-                        String file = card_3;
-                        if (TextUtils.isEmpty(file)) {
-                            return Observable.just(stringStringMap);
-                        }
-                        return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
-                                .map(new Function<Resp<List<JSONObject>>, String>() {
-                                    @Override
-                                    public String apply(Resp<List<JSONObject>> listResp) throws Exception {
-                                        return listResp.getData().get(0).getString("id");
-                                    }
-                                })
-                                .map(new Function<String, Map<String, String>>() {
-                                    @Override
-                                    public Map<String, String> apply(String s) throws Exception {
-                                        stringStringMap.put("picture_id", s);
-                                        return stringStringMap;
-                                    }
-                                });
+                .switchMap(stringStringMap -> {
+                    String file = card_3;
+                    if (TextUtils.isEmpty(file)) {
+                        return Observable.just(stringStringMap);
                     }
+                    return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                            .map(listResp -> listResp.getData().get(0).getString("id"))
+                            .map(s -> {
+                                stringStringMap.put("picture_id", s);
+                                return stringStringMap;
+                            });
                 })
-                .switchMap(new Function<Map<String, String>, ObservableSource<Map<String, String>>>() {
-                    @Override
-                    public ObservableSource<Map<String, String>> apply(final Map<String, String> stringStringMap) throws Exception {
-                        String file = license_1;
-                        if (TextUtils.isEmpty(file)) {
-                            return Observable.just(stringStringMap);
-                        }
-                        return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
-                                .map(new Function<Resp<List<JSONObject>>, String>() {
-                                    @Override
-                                    public String apply(Resp<List<JSONObject>> listResp) throws Exception {
-                                        return listResp.getData().get(0).getString("id");
-                                    }
-                                })
-                                .map(new Function<String, Map<String, String>>() {
-                                    @Override
-                                    public Map<String, String> apply(String s) throws Exception {
-                                        stringStringMap.put("qualification_id", s);
-                                        return stringStringMap;
-                                    }
-                                });
+                .switchMap(stringStringMap -> {
+                    String file = license_1;
+                    if (TextUtils.isEmpty(file)) {
+                        return Observable.just(stringStringMap);
                     }
+                    return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                            .map(listResp -> listResp.getData().get(0).getString("id"))
+                            .map(s -> {
+                                stringStringMap.put("qualification_id", s);
+                                return stringStringMap;
+                            });
                 })
-                .switchMap(new Function<Map<String, String>, ObservableSource<Map<String, String>>>() {
-                    @Override
-                    public ObservableSource<Map<String, String>> apply(final Map<String, String> stringStringMap) throws Exception {
-                        String file = license_2;
-                        if (TextUtils.isEmpty(file)) {
-                            return Observable.just(stringStringMap);
-                        }
-                        return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
-                                .map(new Function<Resp<List<JSONObject>>, String>() {
-                                    @Override
-                                    public String apply(Resp<List<JSONObject>> listResp) throws Exception {
-                                        return listResp.getData().get(0).getString("id");
-                                    }
-                                })
-                                .map(new Function<String, Map<String, String>>() {
-                                    @Override
-                                    public Map<String, String> apply(String s) throws Exception {
-                                        stringStringMap.put("team_id", s);
-                                        return stringStringMap;
-                                    }
-                                });
+                .switchMap(stringStringMap -> {
+                    String file = license_2;
+                    if (TextUtils.isEmpty(file)) {
+                        return Observable.just(stringStringMap);
                     }
+                    return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                            .map(listResp -> listResp.getData().get(0).getString("id"))
+                            .map(s -> {
+                                stringStringMap.put("team_id", s);
+                                return stringStringMap;
+                            });
                 })
-                .switchMap(new Function<Map<String, String>, ObservableSource<Resp>>() {
-                    @Override
-                    public ObservableSource<Resp> apply(final Map<String, String> stringStringMap) throws Exception {
-                        return mGeneralApi.submitCompanyInfo(stringStringMap);
-                    }
-                });
+                .switchMap(stringStringMap -> mGeneralApi.submitCompanyInfo(stringStringMap));
     }
 }
