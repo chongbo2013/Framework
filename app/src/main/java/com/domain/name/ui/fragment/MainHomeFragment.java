@@ -64,7 +64,7 @@ public class MainHomeFragment extends BaseMvpFragment<HomeContract.Presenter> im
 
     @Override
     public void loadSucceed(List<JSONObject> jsonObjects) {
-
+        SingleToast.makeText(getContext(), "载入Banner成功", SingleToast.LENGTH_SHORT).show();
     }
 
     @Override

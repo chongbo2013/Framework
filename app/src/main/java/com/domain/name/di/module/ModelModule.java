@@ -18,12 +18,12 @@ import dagger.Provides;
 public class ModelModule {
 
     @Provides
-    DiskModel provideDiskModel(Context context) {
-        return new DiskModelImpl(context);
+    DiskModel provideDiskModel(DiskModelImpl diskModel) {
+        return diskModel;
     }
 
     @Provides
-    GeneralApiModel provideGeneralApiModel() {
-        return new GeneralApiModelImpl();
+    GeneralApiModel provideGeneralApiModel(GeneralApiModelImpl generalApiModel) {
+        return generalApiModel;
     }
 }

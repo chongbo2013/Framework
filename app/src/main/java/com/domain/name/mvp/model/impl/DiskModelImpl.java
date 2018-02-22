@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import com.domain.framework.base.BaseModel;
 import com.domain.name.mvp.model.DiskModel;
 
+import javax.inject.Inject;
+
 /**
  * 2017/12/15
  * By Liux
@@ -18,6 +20,7 @@ public class DiskModelImpl extends BaseModel implements DiskModel {
 
     private SharedPreferences mSharedPreferences;
 
+    @Inject
     public DiskModelImpl(Context context) {
         mSharedPreferences = context.getSharedPreferences(FILE_XML, Context.MODE_PRIVATE);
     }

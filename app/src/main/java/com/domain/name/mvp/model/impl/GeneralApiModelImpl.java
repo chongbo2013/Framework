@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -33,9 +34,14 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
     @Inject
     GeneralApi mGeneralApi;
 
+    @Inject
+    public GeneralApiModelImpl() {
+    }
+
     @Override
     public Observable<List<JSONObject>> loadBanner() {
         return mGeneralApi.industry("hangye")
+                .delay(3, TimeUnit.SECONDS)
                 .map(stringResp -> new ArrayList<>());
     }
 

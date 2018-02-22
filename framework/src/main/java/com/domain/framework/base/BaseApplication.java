@@ -11,6 +11,7 @@ import android.content.Context;
 
 import com.domain.framework.app.AppControl;
 import com.domain.framework.app.UIProvider;
+import com.liux.rx.lifecycle.LifecyleProviderManager;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -57,6 +58,12 @@ public abstract class BaseApplication extends Application
     private static UIProvider mUIProvider;
 
     private static RefWatcher mRefWatcher;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        LifecyleProviderManager.install(this);
+    }
 
     @Override
     public void onCreate() {

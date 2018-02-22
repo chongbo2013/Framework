@@ -1,6 +1,7 @@
 package com.domain.name.mvp.presenter;
 
 import com.domain.framework.base.BasePresenter;
+import com.domain.framework.rx.ThreadTransformer;
 import com.domain.name.mvp.contract.HomeContract;
 import com.domain.name.mvp.model.GeneralApiModel;
 
@@ -24,8 +25,12 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     @Override
     public void loadBanner() {
         mGeneralApiModel.loadBanner()
-                .compose()
-                .compose()
-                .sub;
+                .compose(ThreadTransformer.io_Main())
+                .compose(mView.bindLifeCycle())
+                .subscribe(jsonObjects -> {
+                    mView.loadSucceed(jsonObjects);
+                }, e -> {
+                    mView.loadFailure(e.getMessage());
+                });
     }
 }

@@ -1,5 +1,7 @@
 package com.domain.framework.base;
 
+import com.liux.rx.lifecycle.BindLifecycle;
+
 /**
  * 2016/12/1
  * By Liux
@@ -8,7 +10,7 @@ package com.domain.framework.base;
 
 public class BaseContract {
 
-    public interface View {
+    public interface View extends BindLifecycle {
 
     }
 

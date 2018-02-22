@@ -7,6 +7,9 @@ import android.support.annotation.Nullable;
 
 import com.domain.framework.app.UIProvider;
 import com.liux.abstracts.AbstractsActivity;
+import com.liux.rx.lifecycle.BindLifecycle;
+import com.liux.rx.lifecycle.LifecyleProviderManager;
+import com.trello.rxlifecycle2.LifecycleTransformer;
 
 import javax.inject.Inject;
 
@@ -24,7 +27,7 @@ import dagger.android.support.HasSupportFragmentInjector;
  */
 
 public abstract class BaseActivity extends AbstractsActivity
-        implements HasFragmentInjector, HasSupportFragmentInjector {
+        implements BindLifecycle, HasFragmentInjector, HasSupportFragmentInjector {
 
     @Inject
     protected UIProvider mUiProvider;
@@ -47,6 +50,11 @@ public abstract class BaseActivity extends AbstractsActivity
         super.onContentChanged();
         ButterKnife.bind(this);
         onInitView();
+    }
+
+    @Override
+    public <T> LifecycleTransformer<T> bindLifeCycle() {
+        return LifecyleProviderManager.getLifecycleProvider(this).bindToLifecycle();
     }
 
     @Override
