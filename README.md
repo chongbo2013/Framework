@@ -12,5 +12,5 @@
 - [Liux's Library](https://gitee.com/lx0758/Library)
 - Other Library (eg. bugly,butterknife,leakcanary)
 
-## base
-- 空的模板项目模块
+## framework
+- 框架库项目
