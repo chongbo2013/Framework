@@ -9,8 +9,8 @@
 
 ## app
 - MVP_RxJava2_Retorfit2_Dagger2 结构的模板项目模块
-- [Liux's Library](https://gitee.com/lx0758/Library)
-- Other Library (eg. bugly,butterknife,leakcanary)
 
 ## framework
 - 框架库项目
+- [Liux's Library](https://github.com/lx0758/Library)
+- Other Library (eg. bugly,butterknife,leakcanary)
