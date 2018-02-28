@@ -19,8 +19,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Function;
 import okhttp3.MultipartBody;
 
 /**
@@ -47,7 +45,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
 
     @Override
     public Observable<JSONObject> uploadFile(File file) {
-        MultipartBody.Part part = HttpUtil.parsePart("files[]", file);
+        MultipartBody.Part part = HttpUtil.parseFilePart("files[]", file, null);
         return mGeneralApi.uploadFile(part)
                 .map(listResp -> listResp.getData().get(0));
     }
@@ -61,7 +59,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
     public Observable<List<JSONObject>> uploadFiles(File[] files) {
         List<MultipartBody.Part> parts = new ArrayList<>();
         for (File file : files) {
-            parts.add(HttpUtil.parsePart("files[]", file));
+            parts.add(HttpUtil.parseFilePart("files[]", file, null));
         }
         return mGeneralApi.uploadFiles(parts)
                 .map(Resp::getData);
@@ -89,7 +87,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                     if (TextUtils.isEmpty(file)) {
                         return Observable.just(stringStringMap);
                     }
-                    return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
                             .map(listResp -> listResp.getData().get(0).getString("id"))
                             .map(s -> {
                                 stringStringMap.put("card_front_id", s);
@@ -101,7 +99,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                     if (TextUtils.isEmpty(file)) {
                         return Observable.just(stringStringMap);
                     }
-                    return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
                             .map(listResp -> listResp.getData().get(0).getString("id"))
                             .map(s -> {
                                 stringStringMap.put("card_back_id", s);
@@ -113,7 +111,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                     if (TextUtils.isEmpty(file)) {
                         return Observable.just(stringStringMap);
                     }
-                    return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
                             .map(listResp -> listResp.getData().get(0).getString("id"))
                             .map(s -> {
                                 stringStringMap.put("picture_id", s);
@@ -125,7 +123,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                     if (TextUtils.isEmpty(file)) {
                         return Observable.just(stringStringMap);
                     }
-                    return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
                             .map(listResp -> listResp.getData().get(0).getString("id"))
                             .map(s -> {
                                 stringStringMap.put("qualification_id", s);
@@ -137,7 +135,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                     if (TextUtils.isEmpty(file)) {
                         return Observable.just(stringStringMap);
                     }
-                    return mGeneralApi.uploadFile(HttpUtil.parsePart("files[]", new File(file)))
+                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
                             .map(listResp -> listResp.getData().get(0).getString("id"))
                             .map(s -> {
                                 stringStringMap.put("team_id", s);

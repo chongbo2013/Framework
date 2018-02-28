@@ -28,18 +28,17 @@ public class LaunchActivity extends BaseMvpActivity<StartContract.Presenter> imp
 
     @Override
     protected void onCreate(@Nullable Bundle bundle) {
-        super.onCreate(bundle);
-        setContentView(R.layout.activity_launch);
+        getWindow().setBackgroundDrawableResource(R.drawable.launch_bg);
 
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                if (mPresenter.showGuide()) {
-                    startActivity(new Intent(LaunchActivity.this, GuideActivity.class));
-                } else {
-                    startActivity(new Intent(LaunchActivity.this, MainActivity.class));
-                }
-                finish();
+        super.onCreate(bundle);
+
+        new Handler().postDelayed(() -> {
+            if (mPresenter.showGuide()) {
+                startActivity(new Intent(LaunchActivity.this, GuideActivity.class));
+            } else {
+                startActivity(new Intent(LaunchActivity.this, MainActivity.class));
             }
-        }, 1000);
+            finish();
+        }, 1500);
     }
 }

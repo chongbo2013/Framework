@@ -1,4 +1,4 @@
-package com.domain.framework.di.annotation;
+package com.domain.name.di.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

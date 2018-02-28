@@ -23,7 +23,7 @@ public class Resp<T> {
         return status;
     }
 
-    public Resp setStatus(int status) {
+    public Resp<T> setStatus(int status) {
         this.status = status;
         return this;
     }
@@ -32,7 +32,7 @@ public class Resp<T> {
         return message;
     }
 
-    public Resp setMessage(String message) {
+    public Resp<T> setMessage(String message) {
         this.message = message;
         return this;
     }
@@ -41,7 +41,7 @@ public class Resp<T> {
         return data;
     }
 
-    public Resp setData(T data) {
+    public Resp<T> setData(T data) {
         this.data = data;
         return this;
     }

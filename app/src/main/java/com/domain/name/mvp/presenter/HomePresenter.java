@@ -1,9 +1,10 @@
 package com.domain.name.mvp.presenter;
 
 import com.domain.framework.base.BasePresenter;
-import com.domain.framework.rx.ThreadTransformer;
+import com.domain.name.rx.transformer.ApiTransformer;
 import com.domain.name.mvp.contract.HomeContract;
 import com.domain.name.mvp.model.GeneralApiModel;
+import com.liux.rx.transformer.ThreadTransformer;
 
 import javax.inject.Inject;
 
@@ -26,6 +27,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     public void loadBanner() {
         mGeneralApiModel.loadBanner()
                 .compose(ThreadTransformer.io_Main())
+                .compose(ApiTransformer.create())
                 .compose(mView.bindLifeCycle())
                 .subscribe(jsonObjects -> {
                     mView.loadSucceed(jsonObjects);
