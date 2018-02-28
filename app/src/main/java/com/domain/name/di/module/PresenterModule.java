@@ -1,7 +1,5 @@
 package com.domain.name.di.module;
 
-import com.domain.framework.base.BaseContract;
-import com.domain.framework.base.BasePresenter;
 import com.domain.name.mvp.contract.*;
 import com.domain.name.mvp.presenter.*;
 
@@ -16,11 +14,6 @@ import dagger.Provides;
 
 @Module(includes = {ModelModule.class})
 public class PresenterModule {
-
-    @Provides
-    BaseContract.Presenter provideBasePresenter() {
-        return new BasePresenter();
-    }
 
     @Provides
     StartContract.Presenter provideStartPresenter(StartPresenter startPresenter) {

@@ -1,7 +1,5 @@
 package com.domain.name.di.module;
 
-import android.content.Context;
-
 import com.domain.name.mvp.model.*;
 import com.domain.name.mvp.model.impl.*;
 

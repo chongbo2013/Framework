@@ -1,10 +1,15 @@
 package com.domain.name.mvp.presenter;
 
-import com.domain.framework.base.BasePresenter;
-import com.domain.name.rx.transformer.ApiTransformer;
+import com.alibaba.fastjson.JSONObject;
 import com.domain.name.mvp.contract.HomeContract;
 import com.domain.name.mvp.model.GeneralApiModel;
+import com.domain.name.rx.observer.GeneralObserver;
+import com.domain.name.rx.transformer.ApiTransformer;
+import com.liux.framework.base.BasePresenter;
+import com.liux.rx.error.ErrorTransformer;
 import com.liux.rx.transformer.ThreadTransformer;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -20,19 +25,23 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     GeneralApiModel mGeneralApiModel;
 
     @Inject
-    public HomePresenter() {
+    HomePresenter() {
     }
 
     @Override
     public void loadBanner() {
         mGeneralApiModel.loadBanner()
-                .compose(ThreadTransformer.io_Main())
-                .compose(ApiTransformer.create())
-                .compose(mView.bindLifeCycle())
-                .subscribe(jsonObjects -> {
-                    mView.loadSucceed(jsonObjects);
-                }, e -> {
-                    mView.loadFailure(e.getMessage());
+                .compose(ApiTransformer.api(mView))
+                .subscribe(new GeneralObserver<List<JSONObject>>() {
+                    @Override
+                    public void onSucceed(List<JSONObject> jsonObjects) {
+                        mView.loadSucceed(jsonObjects);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String msg) {
+                        mView.loadFailure(msg);
+                    }
                 });
     }
 }

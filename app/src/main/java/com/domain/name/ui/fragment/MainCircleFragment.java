@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.liux.util.ScreenUtil;
 import com.domain.name.R;
-import com.domain.framework.base.BaseFragment;
+import com.liux.framework.base.BaseFragment;
+import com.liux.util.ScreenUtil;
 
 /**
  * 2017/11/6

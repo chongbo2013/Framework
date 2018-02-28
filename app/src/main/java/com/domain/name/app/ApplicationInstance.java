@@ -1,17 +1,16 @@
 package com.domain.name.app;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
-import com.domain.framework.app.AppControl;
-import com.domain.framework.app.UIProvider;
-import com.domain.framework.base.BaseApplication;
 import com.domain.name.BuildConfig;
 import com.domain.name.app.control.LocalControl;
 import com.domain.name.app.control.RemoteControl;
 import com.domain.name.di.component.DaggerAppComponent;
 import com.domain.name.mvp.model.conf.URL;
+import com.liux.framework.app.AppControl;
+import com.liux.framework.app.UIProvider;
+import com.liux.framework.base.BaseApplication;
 import com.liux.http.HttpClient;
 import com.liux.http.interceptor.HttpLoggingInterceptor;
 import com.liux.tool.Logger;
@@ -44,6 +43,11 @@ public class ApplicationInstance extends BaseApplication {
                         HttpLoggingInterceptor.Level.BODY :
                         HttpLoggingInterceptor.Level.NONE
         );
+    }
+
+    @Override
+    protected void onGlobalError(Throwable throwable) {
+
     }
 
     @Override

@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.liux.util.ScreenUtil;
 import com.domain.name.R;
-import com.domain.framework.base.BaseFragment;
+import com.liux.framework.base.BaseFragment;
+import com.liux.util.ScreenUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;

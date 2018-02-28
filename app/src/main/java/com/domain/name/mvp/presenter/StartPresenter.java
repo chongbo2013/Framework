@@ -2,9 +2,9 @@ package com.domain.name.mvp.presenter;
 
 import android.content.Context;
 
-import com.domain.framework.base.BasePresenter;
 import com.domain.name.mvp.contract.StartContract;
 import com.domain.name.mvp.model.DiskModel;
+import com.liux.framework.base.BasePresenter;
 import com.liux.util.AppUtil;
 
 import javax.inject.Inject;
@@ -23,7 +23,7 @@ public class StartPresenter extends BasePresenter<StartContract.View> implements
     DiskModel mDiskModel;
 
     @Inject
-    public StartPresenter() {
+    StartPresenter() {
     }
 
     @Override

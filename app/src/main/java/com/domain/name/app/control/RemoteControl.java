@@ -1,6 +1,6 @@
 package com.domain.name.app.control;
 
-import com.domain.framework.app.AppControl;
+import com.liux.framework.app.AppControl;
 
 /**
  * 2017/11/6

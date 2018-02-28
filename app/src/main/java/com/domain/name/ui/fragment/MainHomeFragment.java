@@ -10,10 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.alibaba.fastjson.JSONObject;
-import com.domain.framework.base.BaseMvpFragment;
 import com.domain.name.R;
 import com.domain.name.mvp.contract.HomeContract;
 import com.domain.name.ui.activity.WebViewActivity;
+import com.liux.framework.base.BaseMvpFragment;
 import com.liux.util.ScreenUtil;
 import com.liux.view.SingleToast;
 import com.mobsandgeeks.saripaar.annotation.Url;

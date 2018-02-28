@@ -1,6 +1,6 @@
 package com.domain.name.mvp.contract;
 
-import com.domain.framework.base.BaseContract;
+import com.liux.framework.base.BaseContract;
 
 /**
  * 2017/12/15

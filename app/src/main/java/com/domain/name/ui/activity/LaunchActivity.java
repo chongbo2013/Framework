@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 
-import com.domain.framework.base.BaseMvpActivity;
 import com.domain.name.R;
 import com.domain.name.mvp.contract.StartContract;
 import com.liux.abstracts.titlebar.TitleBar;
 import com.liux.abstracts.titlebar.TransparentTitleBar;
-
-import java.util.Map;
+import com.liux.framework.base.BaseMvpActivity;
 
 /**
  * 2017/8/17

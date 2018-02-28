@@ -2,8 +2,8 @@ package com.domain.name.di.module;
 
 import android.content.Context;
 
-import com.domain.framework.app.UIProvider;
-import com.domain.framework.base.BaseApplication;
+import com.liux.framework.app.UIProvider;
+import com.liux.framework.base.BaseApplication;
 import com.liux.http.HttpClient;
 
 import javax.inject.Singleton;

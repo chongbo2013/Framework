@@ -2,10 +2,10 @@ package com.domain.name.app;
 
 import android.content.Context;
 
-import com.domain.framework.app.UIProvider;
-import com.domain.framework.ui.IAlertDialog;
-import com.domain.framework.ui.IProgressDialog;
-import com.domain.framework.ui.IToast;
+import com.liux.framework.app.UIProvider;
+import com.liux.framework.ui.IAlertDialog;
+import com.liux.framework.ui.IProgressDialog;
+import com.liux.framework.ui.IToast;
 
 /**
  * 2018/2/11

@@ -1,7 +1,7 @@
 package com.domain.name.mvp.contract;
 
 import com.alibaba.fastjson.JSONObject;
-import com.domain.framework.base.BaseContract;
+import com.liux.framework.base.BaseContract;
 
 import java.util.List;
 

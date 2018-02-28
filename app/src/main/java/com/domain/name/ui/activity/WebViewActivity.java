@@ -12,9 +12,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.domain.framework.base.BaseActivity;
 import com.domain.name.ui.js.JavaScript;
 import com.liux.abstracts.titlebar.DefaultTitleBar;
+import com.liux.framework.base.BaseActivity;
 import com.liux.view.SingleToast;
 import com.tencent.bugly.crashreport.CrashReport;
 

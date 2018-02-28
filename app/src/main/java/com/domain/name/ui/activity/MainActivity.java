@@ -8,15 +8,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.domain.name.ui.adapter.TabAdapter;
 import com.domain.name.R;
-import com.domain.framework.base.BaseActivity;
+import com.domain.name.ui.adapter.TabAdapter;
 import com.domain.name.ui.fragment.MainCenterFragment;
 import com.domain.name.ui.fragment.MainCircleFragment;
 import com.domain.name.ui.fragment.MainHomeFragment;
 import com.domain.name.ui.fragment.MainServerFragment;
 import com.liux.abstracts.titlebar.TitleBar;
 import com.liux.abstracts.titlebar.TransparentTitleBar;
+import com.liux.framework.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;

@@ -3,10 +3,11 @@ package com.domain.name.mvp.model.impl;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.domain.framework.base.BaseModel;
 import com.domain.name.mvp.model.GeneralApiModel;
 import com.domain.name.mvp.model.api.GeneralApi;
 import com.domain.name.mvp.model.bean.Resp;
+import com.domain.name.rx.transformer.ApiTransformer;
+import com.liux.framework.base.BaseModel;
 import com.liux.http.HttpUtil;
 
 import java.io.File;
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -28,26 +28,19 @@ import okhttp3.MultipartBody;
  */
 
 public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
-    
+
     @Inject
     GeneralApi mGeneralApi;
 
     @Inject
-    public GeneralApiModelImpl() {
+    GeneralApiModelImpl() {
     }
 
     @Override
     public Observable<List<JSONObject>> loadBanner() {
         return mGeneralApi.industry("hangye")
-                .delay(3, TimeUnit.SECONDS)
-                .map(stringResp -> new ArrayList<>());
-    }
-
-    @Override
-    public Observable<JSONObject> uploadFile(File file) {
-        MultipartBody.Part part = HttpUtil.parseFilePart("files[]", file, null);
-        return mGeneralApi.uploadFile(part)
-                .map(listResp -> listResp.getData().get(0));
+                .compose(ApiTransformer.resp())
+                .map(string -> new ArrayList<>());
     }
 
     @Override
@@ -56,13 +49,11 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
     }
 
     @Override
-    public Observable<List<JSONObject>> uploadFiles(File[] files) {
-        List<MultipartBody.Part> parts = new ArrayList<>();
-        for (File file : files) {
-            parts.add(HttpUtil.parseFilePart("files[]", file, null));
-        }
-        return mGeneralApi.uploadFiles(parts)
-                .map(Resp::getData);
+    public Observable<JSONObject> uploadFile(File file) {
+        MultipartBody.Part part = HttpUtil.parseFilePart("files[]", file, null);
+        return mGeneralApi.uploadFile(part)
+                .compose(ApiTransformer.resp())
+                .map(jsonObjects -> jsonObjects.get(0));
     }
 
     @Override
@@ -72,6 +63,16 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
             files[i] = new File(paths[i]);
         }
         return uploadFiles(files);
+    }
+
+    @Override
+    public Observable<List<JSONObject>> uploadFiles(File[] files) {
+        List<MultipartBody.Part> parts = new ArrayList<>();
+        for (File file : files) {
+            parts.add(HttpUtil.parseFilePart("files[]", file, null));
+        }
+        return mGeneralApi.uploadFiles(parts)
+                .compose(ApiTransformer.resp());
     }
 
     @Override
@@ -88,7 +89,8 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         return Observable.just(stringStringMap);
                     }
                     return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
-                            .map(listResp -> listResp.getData().get(0).getString("id"))
+                            .compose(ApiTransformer.resp())
+                            .map(jsonObjects -> jsonObjects.get(0).getString("id"))
                             .map(s -> {
                                 stringStringMap.put("card_front_id", s);
                                 return stringStringMap;
@@ -100,7 +102,8 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         return Observable.just(stringStringMap);
                     }
                     return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
-                            .map(listResp -> listResp.getData().get(0).getString("id"))
+                            .compose(ApiTransformer.resp())
+                            .map(jsonObjects -> jsonObjects.get(0).getString("id"))
                             .map(s -> {
                                 stringStringMap.put("card_back_id", s);
                                 return stringStringMap;
@@ -112,7 +115,8 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         return Observable.just(stringStringMap);
                     }
                     return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
-                            .map(listResp -> listResp.getData().get(0).getString("id"))
+                            .compose(ApiTransformer.resp())
+                            .map(jsonObjects -> jsonObjects.get(0).getString("id"))
                             .map(s -> {
                                 stringStringMap.put("picture_id", s);
                                 return stringStringMap;
@@ -124,7 +128,8 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         return Observable.just(stringStringMap);
                     }
                     return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
-                            .map(listResp -> listResp.getData().get(0).getString("id"))
+                            .compose(ApiTransformer.resp())
+                            .map(jsonObjects -> jsonObjects.get(0).getString("id"))
                             .map(s -> {
                                 stringStringMap.put("qualification_id", s);
                                 return stringStringMap;
@@ -136,7 +141,8 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                         return Observable.just(stringStringMap);
                     }
                     return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
-                            .map(listResp -> listResp.getData().get(0).getString("id"))
+                            .compose(ApiTransformer.resp())
+                            .map(jsonObjects -> jsonObjects.get(0).getString("id"))
                             .map(s -> {
                                 stringStringMap.put("team_id", s);
                                 return stringStringMap;
