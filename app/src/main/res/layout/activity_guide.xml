@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.GuideActivity">
+    tools:context="abc.unknow.caifujing.ui.activity.GuideActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_content"
@@ -21,12 +21,13 @@
         android:orientation="horizontal"/>
 
     <Button
-        android:id="@+id/btn_skip"
-        android:layout_width="30dp"
-        android:layout_height="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="30dp"
-        android:layout_alignParentRight="true"
-        android:visibility="visible" />
+        android:id="@+id/btn_join"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="@string/guide_jion"
+        android:visibility="invisible" />
 
 </RelativeLayout>

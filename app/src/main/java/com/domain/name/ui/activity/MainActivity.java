@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @OnClick({R.id.ll_shouye, R.id.ll_zhishiquan, R.id.ll_kefu, R.id.ll_wode})
-    public void onViewClicked(View view) {
+    void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_shouye:
                 vpContent.setCurrentItem(INDEX_HOME);

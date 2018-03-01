@@ -55,7 +55,7 @@ public class MainHomeFragment extends BaseMvpFragment<HomeContract.Presenter> im
     }
 
     @OnClick(R.id.btn_webview)
-    public void onViewClicked() {
+    void onViewClicked() {
         getValidator().setViewValidatedAction(view -> {
             WebViewActivity.startWebView(getContext(), etUrl.getText().toString());
         });

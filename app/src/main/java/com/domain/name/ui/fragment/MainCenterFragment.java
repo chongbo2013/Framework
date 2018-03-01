@@ -35,7 +35,7 @@ public class MainCenterFragment extends BaseFragment {
     }
 
     @OnClick(R.id.iv_header)
-    public void onViewClicked() {
+    void onViewClicked() {
 
     }
 }
