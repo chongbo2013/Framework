@@ -2,19 +2,29 @@ package com.domain.name.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
+import com.domain.name.R;
 import com.domain.name.ui.js.JavaScript;
 import com.liux.abstracts.titlebar.DefaultTitleBar;
 import com.liux.framework.base.BaseActivity;
+import com.liux.util.ScreenUtil;
 import com.liux.view.SingleToast;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -32,10 +42,19 @@ public class WebViewActivity extends BaseActivity {
     private static final String PARAM_TITLE = "WebViewActivity_title";
     private static final String PARAM_HEADER = "WebViewActivity_header";
 
-    private WebView mWebView;
     private JavaScript mJavaScript;
 
+    private WebView mWebView;
+    private ProgressBar mProgressBar;
+
     private WebViewClient mWebViewClient = new WebViewClient() {
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            mProgressBar.setProgress(0);
+            mProgressBar.setVisibility(View.VISIBLE);
+            super.onPageStarted(view, url, favicon);
+        }
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (view.getHitTestResult().getType() == WebView.HitTestResult.UNKNOWN_TYPE) {
@@ -48,6 +67,18 @@ public class WebViewActivity extends BaseActivity {
     };
 
     private WebChromeClient mWebChromeClient = new WebChromeClient() {
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            if (newProgress > 85) {
+                // 大于85是国际惯例
+                mProgressBar.setProgress(100);
+                mProgressBar.setVisibility(View.GONE);
+            } else {
+                mProgressBar.setProgress(newProgress);
+            }
+            super.onProgressChanged(view, newProgress);
+        }
+
         @Override
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
@@ -84,8 +115,18 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mWebView = new WebView(this);
-        setContentView(mWebView);
+        addContentView(mWebView, new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        ));
+
+        mProgressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
+        addContentView(mProgressBar, new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ScreenUtil.dp2px(this, 1.5f)
+        ));
     }
 
     @Override
@@ -104,6 +145,8 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void onInitView() {
+        if (mWebView == null || mProgressBar == null) return;
+
         if (!mTitle) {
             ((DefaultTitleBar) getTitleBar()).getView().setVisibility(View.GONE);
         } else {
@@ -118,8 +161,26 @@ public class WebViewActivity extends BaseActivity {
         mWebView.setWebChromeClient(mWebChromeClient);
         mWebView.setDownloadListener(mDownloadListener);
         mWebView.addJavascriptInterface(mJavaScript, JavaScript.CLASS_NAME);
-
         initSetting();
+
+        Drawable[] drawables = new Drawable[3];
+        drawables[0] = new ColorDrawable(0x60000000);
+        drawables[1] = new ClipDrawable(
+                new ColorDrawable(0x60000000),
+                Gravity.LEFT,
+                ClipDrawable.HORIZONTAL
+        );
+        drawables[2] = new ClipDrawable(
+                new ColorDrawable(getResources().getColor(R.color.colorAccent)),
+                Gravity.LEFT,
+                ClipDrawable.HORIZONTAL
+        );
+        LayerDrawable layerDrawable = new LayerDrawable(drawables);
+        layerDrawable.setId(0, android.R.id.background);
+        layerDrawable.setId(1, android.R.id.secondaryProgress);
+        layerDrawable.setId(2, android.R.id.progress);
+        mProgressBar.setProgressDrawable(layerDrawable);
+        mProgressBar.setMax(100);
 
         CrashReport.setJavascriptMonitor(mWebView, true);
     }
@@ -185,7 +246,7 @@ public class WebViewActivity extends BaseActivity {
             intent.setDataAndType(Uri.parse(url), mimeType);
             startActivity(intent);
         } catch (Exception e) {
-            SingleToast.makeText(this, "没有找到对应的应用程序,打开链接失败", SingleToast.LENGTH_SHORT).show();
+            SingleToast.makeText(this, R.string.web_open_error, SingleToast.LENGTH_SHORT).show();
         }
     }
 }

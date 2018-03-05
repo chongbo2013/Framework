@@ -3,6 +3,8 @@
 
     <string name="guide_jion">进入</string>
 
+    <string name="web_open_error">没有找到对应的应用程序,打开链接失败</string>
+
     <string name="main_tab_1">首页</string>
     <string name="main_tab_2">知识圈</string>
     <string name="main_tab_3">客服</string>
