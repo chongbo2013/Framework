@@ -4,7 +4,7 @@
     <color name="colorMain">#2D7BF0</color>
     <color name="colorHighlight">#FF4081</color>
     <color name="colorForeground">#FFFFFF</color>
-    <color name="colorBackground">#F7F7F7</color>
+    <color name="colorBackground">#EAEAEA</color>
 
     <color name="colorPrimary">@color/colorMain</color>
     <color name="colorPrimaryDark">@color/colorMain</color>
