@@ -12,7 +12,7 @@ import dagger.Provides;
  * lx0758@qq.com
  */
 
-@Module(includes = {ModelModule.class})
+@Module(includes = ModelModule.class)
 public class PresenterModule {
 
     @Provides

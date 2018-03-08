@@ -66,6 +66,6 @@ public class ApplicationInstance extends BaseApplication {
 
     @Override
     protected UIProvider initUIProvide() {
-        return new UIProviderImpl();
+        return new UIProviderImpl(getContext());
     }
 }

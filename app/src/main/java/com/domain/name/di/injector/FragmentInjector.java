@@ -1,4 +1,4 @@
-package com.domain.name.di.module;
+package com.domain.name.di.injector;
 
 import com.domain.name.ui.fragment.*;
 
@@ -12,7 +12,7 @@ import dagger.android.ContributesAndroidInjector;
  */
 
 @Module
-public abstract class FragmentModule {
+public abstract class FragmentInjector {
 
     @ContributesAndroidInjector
     abstract MainHomeFragment mainHomeFragmentInjector();

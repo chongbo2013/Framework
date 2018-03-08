@@ -2,6 +2,7 @@ package com.domain.name.di.module;
 
 import android.content.Context;
 
+import com.domain.name.app.ApplicationInstance;
 import com.liux.framework.app.UIProvider;
 import com.liux.framework.base.BaseApplication;
 import com.liux.http.HttpClient;
@@ -10,6 +11,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import dagger.android.AndroidInjectionModule;
+import dagger.android.support.AndroidSupportInjectionModule;
 
 /**
  * 2018/2/11
@@ -17,13 +20,13 @@ import dagger.Provides;
  * lx0758@qq.com
  */
 
-@Module(includes = {ActivityModule.class, FragmentModule.class, PresenterModule.class})
+@Module(includes = {AndroidInjectionModule.class, AndroidSupportInjectionModule.class, PresenterModule.class})
 public class AppModule {
 
     @Provides
     @Singleton
     Context provideApplicationContext() {
-        return BaseApplication.getContext();
+        return ApplicationInstance.getContext();
     }
 
     @Provides
@@ -35,7 +38,6 @@ public class AppModule {
     @Provides
     @Singleton
     UIProvider provideUIProvider() {
-        return BaseApplication.getUIProvide();
+        return ApplicationInstance.getUIProvide();
     }
-
 }

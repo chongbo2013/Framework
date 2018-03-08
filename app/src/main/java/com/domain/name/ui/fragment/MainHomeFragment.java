@@ -69,6 +69,6 @@ public class MainHomeFragment extends BaseMvpFragment<HomeContract.Presenter> im
 
     @Override
     public void loadFailure(String msg) {
-        SingleToast.makeText(getContext(), msg, SingleToast.LENGTH_SHORT).show();
+        mUiProvider.provideIToast().showError(msg);
     }
 }
