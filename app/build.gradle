@@ -44,6 +44,8 @@ dependencies {
 
     implementation project(':framework')
 
+    // Design
+    implementation "com.android.support:design:${LIBRARY_SUPPORT}"
     // Dagger2
     annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
     annotationProcessor "com.google.dagger:dagger-android-processor:2.14.1"
