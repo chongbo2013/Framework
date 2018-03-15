@@ -2,6 +2,7 @@ package org.domain.name.rx.transformer;
 
 import com.liux.rx.error.ErrorTransformer;
 import com.liux.rx.lifecycle.BindLifecycle;
+import com.liux.rx.lifecycle.Event;
 import com.liux.rx.transformer.ThreadTransformer;
 
 import org.domain.name.mvp.model.bean.Resp;
@@ -32,6 +33,13 @@ public class ApiTransformer {
         return upstream -> upstream
                 .compose(ThreadTransformer.io_Main())
                 .compose(ErrorTransformer.get())
-                .compose(bindLifecycle.bindLifeCycle());
+                .compose(bindLifecycle.bindLifecycle());
+    }
+
+    public static <T> ObservableTransformer<T, T> api(BindLifecycle bindLifecycle, Event event) {
+        return upstream -> upstream
+                .compose(ThreadTransformer.io_Main())
+                .compose(ErrorTransformer.get())
+                .compose(bindLifecycle.bindLifecycle(event));
     }
 }

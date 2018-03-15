@@ -9,8 +9,11 @@ import android.view.View;
 import com.liux.abstracts.AbstractsFragment;
 import com.liux.framework.app.UIProvider;
 import com.liux.rx.lifecycle.BindLifecycle;
+import com.liux.rx.lifecycle.Event;
+import com.liux.rx.lifecycle.EventHelper;
 import com.liux.rx.lifecycle.LifecyleProviderManager;
 import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import javax.inject.Inject;
 
@@ -62,8 +65,15 @@ public abstract class BaseFragment extends AbstractsFragment
     }
 
     @Override
-    public <T> LifecycleTransformer<T> bindLifeCycle() {
-        return LifecyleProviderManager.getLifecycleProvider(this).bindToLifecycle();
+    public <T> LifecycleTransformer<T> bindLifecycle() {
+        //return LifecyleProviderManager.getLifecycleProvider(this).bindToLifecycle();
+        return LifecyleProviderManager.getLifecycleProvider(this).bindUntilEvent(FragmentEvent.DESTROY);
+    }
+
+    @Override
+    public <T> LifecycleTransformer<T> bindLifecycle(Event event) {
+        FragmentEvent fragmentEvent = EventHelper.with(this).get(event);
+        return LifecyleProviderManager.getLifecycleProvider(this).bindUntilEvent(fragmentEvent);
     }
 
     @Override

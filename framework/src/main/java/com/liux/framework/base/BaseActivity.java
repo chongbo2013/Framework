@@ -7,8 +7,11 @@ import android.support.annotation.Nullable;
 import com.liux.abstracts.AbstractsActivity;
 import com.liux.framework.app.UIProvider;
 import com.liux.rx.lifecycle.BindLifecycle;
+import com.liux.rx.lifecycle.Event;
+import com.liux.rx.lifecycle.EventHelper;
 import com.liux.rx.lifecycle.LifecyleProviderManager;
 import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import javax.inject.Inject;
 
@@ -52,8 +55,15 @@ public abstract class BaseActivity extends AbstractsActivity
     }
 
     @Override
-    public <T> LifecycleTransformer<T> bindLifeCycle() {
-        return LifecyleProviderManager.getLifecycleProvider(this).bindToLifecycle();
+    public <T> LifecycleTransformer<T> bindLifecycle() {
+        //return LifecyleProviderManager.getLifecycleProvider(this).bindToLifecycle();
+        return LifecyleProviderManager.getLifecycleProvider(this).bindUntilEvent(ActivityEvent.DESTROY);
+    }
+
+    @Override
+    public <T> LifecycleTransformer<T> bindLifecycle(Event event) {
+        ActivityEvent activityEvent = EventHelper.with(this).get(event);
+        return LifecyleProviderManager.getLifecycleProvider(this).bindUntilEvent(activityEvent);
     }
 
     @Override
