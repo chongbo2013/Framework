@@ -29,8 +29,8 @@ public class ApplicationInstance extends BaseApplication {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
         MultiDex.install(base);
+        super.attachBaseContext(base);
     }
 
     @Override

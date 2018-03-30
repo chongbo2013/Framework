@@ -1,16 +1,24 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias ''
-            keyPassword ''
-            storeFile file('../store.jks')
-            storePassword ''
-        }
-    }
     compileSdkVersion COMPILE_SDK_VERSION as int
     buildToolsVersion BUILD_TOOLS_VERSION as String
+    signingConfigs {
+        config {
+            Properties properties = new Properties()
+            InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+            properties.load(inputStream)
+            def key_keyAlias = properties.getProperty('keyAlias')
+            def key_keyPassword = properties.getProperty('keyPassword')
+            def key_storePassword = properties.getProperty('storePassword')
+            inputStream.close()
+
+            keyAlias key_keyAlias
+            keyPassword key_keyPassword
+            storePassword key_storePassword
+            storeFile file('./store.jks')
+        }
+    }
     defaultConfig {
         applicationId "org.domain.name"
         minSdkVersion MIN_SDK_VERSION as int
@@ -18,17 +26,19 @@ android {
         versionCode 1_00_00
         versionName "1.0.0.0000"
         multiDexEnabled true
-        signingConfig signingConfigs.config
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-//        debug {
-//            minifyEnabled false
-//            signingConfig signingConfigs.config
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
+        debug {
+            signingConfig signingConfigs.config
+        }
         release {
-            minifyEnabled false
+            debuggable false
+            jniDebuggable false
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            renderscriptDebuggable false
             signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

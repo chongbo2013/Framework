@@ -37,7 +37,7 @@
 # Android不需要preverify，去掉这一步能够加快混淆速度
 -dontpreverify
 # 保留Annotation不混淆
--keepattributes *Annotation*,InnerClasses
+-keepattributes *Annotation*
 # 避免混淆泛型
 -keepattributes Signature
 # 抛出异常时保留代码行号
@@ -64,13 +64,11 @@
 -keepclasseswithmembers class * {
     public <init>(android.content.Context, android.util.AttributeSet);
 }
-
- # 保持自定义控件类不被混淆
 -keepclasseswithmembers class * {
     public <init>(android.content.Context, android.util.AttributeSet, int);
 }
 
-# 保持自定义控件类不被混淆
+# 保持在layout中写的onClick方法android:onclick="onClick"不被混淆
 -keepclassmembers class * extends android.app.Activity {
     public void *(android.view.View);
 }
@@ -78,7 +76,7 @@
 # 保持枚举 enum 类不被混淆
 -keepclassmembers enum * {
     public static **[] values();
-    public static ** valueOf(java.lang.String);
+    public static ** **;
 }
 
 # 保持 Parcelable 不被混淆
@@ -86,10 +84,24 @@
     public static final android.os.Parcelable$Creator *;
 }
 
-# 这个主要是在layout中写的onclick方法android:onclick="onClick"，不进行混淆
--keepclassmembers class * extends android.app.Activity {
-    public void *(android.view.View);
-}
 
-# 保持注解
--keepattributes *Annotation*
+
+# Support
+-keep class android.support.** {*;}
+# Saripaar
+-keep class com.mobsandgeeks.saripaar.** {*;}
+-keep @com.mobsandgeeks.saripaar.annotation.ValidateUsing class * {*;}
+# OkHttp3
+-dontwarn okhttp3.**
+-keep class okhttp3.** {*;}
+-dontwarn okio.**
+-keep class okio.** {*;}
+# Retrofit2
+-dontwarn retrofit2.**
+-keep class retrofit2.** {*;}
+-keepattributes Signature
+-keepattributes Exceptions
+# FastJSON
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.** {*;}
+-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,LocalVariable*Table,*Annotation*,Synthetic,EnclosingMethod

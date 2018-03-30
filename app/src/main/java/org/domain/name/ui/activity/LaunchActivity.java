@@ -33,11 +33,6 @@ public class LaunchActivity extends BaseMvpActivity<StartContract.Presenter> imp
     private CountDownTimer mCountDownTimer;
 
     @Override
-    public TitleBar onInitTitleBar() {
-        return new TransparentTitleBar(this);
-    }
-
-    @Override
     protected void onCreate(@Nullable Bundle bundle) {
         getWindow().setBackgroundDrawableResource(R.drawable.launch_bg);
 
@@ -83,7 +78,7 @@ public class LaunchActivity extends BaseMvpActivity<StartContract.Presenter> imp
         mTextView.setPadding(padding, padding / 2, padding, padding / 2);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.gravity = Gravity.RIGHT;
-        layoutParams.topMargin = padding * 4;
+        layoutParams.topMargin = padding * 3;
         layoutParams.rightMargin = padding * 3;
         mTextView.setLayoutParams(layoutParams);
         mTextView.setOnClickListener(v -> mCountDownTimer.finish());
