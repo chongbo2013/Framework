@@ -1,13 +1,12 @@
 package org.domain.name.di.module;
 
-import com.liux.http.HttpClient;
-
 import org.domain.name.mvp.model.api.GeneralApi;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
 
 /**
  * 2018/2/11
@@ -20,7 +19,7 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    GeneralApi provideCommonApi(HttpClient httpClient) {
-        return httpClient.getRetrofit().create(GeneralApi.class);
+    GeneralApi provideCommonApi(Retrofit retrofit) {
+        return retrofit.create(GeneralApi.class);
     }
 }

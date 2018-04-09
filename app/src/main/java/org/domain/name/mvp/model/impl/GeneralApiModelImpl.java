@@ -51,7 +51,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
 
     @Override
     public Observable<JSONObject> uploadFile(File file) {
-        MultipartBody.Part part = HttpUtil.parseFilePart("files[]", file, null);
+        MultipartBody.Part part = HttpUtil.parseFilePart("files[]", file);
         return mGeneralApi.uploadFile(part)
                 .compose(ApiTransformer.resp())
                 .map(jsonObjects -> jsonObjects.get(0));
@@ -70,7 +70,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
     public Observable<List<JSONObject>> uploadFiles(File[] files) {
         List<MultipartBody.Part> parts = new ArrayList<>();
         for (File file : files) {
-            parts.add(HttpUtil.parseFilePart("files[]", file, null));
+            parts.add(HttpUtil.parseFilePart("files[]", file));
         }
         return mGeneralApi.uploadFiles(parts)
                 .compose(ApiTransformer.resp());
@@ -89,7 +89,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                     if (TextUtils.isEmpty(file)) {
                         return Observable.just(stringStringMap);
                     }
-                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
+                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file)))
                             .compose(ApiTransformer.resp())
                             .map(jsonObjects -> jsonObjects.get(0).getString("id"))
                             .map(s -> {
@@ -102,7 +102,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                     if (TextUtils.isEmpty(file)) {
                         return Observable.just(stringStringMap);
                     }
-                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
+                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file)))
                             .compose(ApiTransformer.resp())
                             .map(jsonObjects -> jsonObjects.get(0).getString("id"))
                             .map(s -> {
@@ -115,7 +115,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                     if (TextUtils.isEmpty(file)) {
                         return Observable.just(stringStringMap);
                     }
-                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
+                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file)))
                             .compose(ApiTransformer.resp())
                             .map(jsonObjects -> jsonObjects.get(0).getString("id"))
                             .map(s -> {
@@ -128,7 +128,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                     if (TextUtils.isEmpty(file)) {
                         return Observable.just(stringStringMap);
                     }
-                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
+                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file)))
                             .compose(ApiTransformer.resp())
                             .map(jsonObjects -> jsonObjects.get(0).getString("id"))
                             .map(s -> {
@@ -141,7 +141,7 @@ public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
                     if (TextUtils.isEmpty(file)) {
                         return Observable.just(stringStringMap);
                     }
-                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file), null))
+                    return mGeneralApi.uploadFile(HttpUtil.parseFilePart("files[]", new File(file)))
                             .compose(ApiTransformer.resp())
                             .map(jsonObjects -> jsonObjects.get(0).getString("id"))
                             .map(s -> {

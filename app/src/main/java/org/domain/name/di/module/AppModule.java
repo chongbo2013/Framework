@@ -3,7 +3,7 @@ package org.domain.name.di.module;
 import android.content.Context;
 
 import com.liux.framework.app.UIProvider;
-import com.liux.http.HttpClient;
+import com.liux.http.Http;
 
 import org.domain.name.app.ApplicationInstance;
 
@@ -13,6 +13,7 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.android.AndroidInjectionModule;
 import dagger.android.support.AndroidSupportInjectionModule;
+import retrofit2.Retrofit;
 
 /**
  * 2018/2/11
@@ -31,8 +32,14 @@ public class AppModule {
 
     @Provides
     @Singleton
-    HttpClient provideHttpClient() {
-        return HttpClient.getInstance();
+    Http provideHttp() {
+        return Http.get();
+    }
+
+    @Provides
+    @Singleton
+    Retrofit provideRetrofit() {
+        return Http.get().getRetrofit();
     }
 
     @Provides

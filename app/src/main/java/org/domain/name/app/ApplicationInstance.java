@@ -6,7 +6,7 @@ import android.support.multidex.MultiDex;
 import com.liux.framework.app.AppControl;
 import com.liux.framework.app.UIProvider;
 import com.liux.framework.base.BaseApplication;
-import com.liux.http.HttpClient;
+import com.liux.http.Http;
 import com.liux.http.interceptor.HttpLoggingInterceptor;
 import com.liux.tool.Logger;
 import com.liux.util.AppUtil;
@@ -38,8 +38,8 @@ public class ApplicationInstance extends BaseApplication {
         super.onCreate();
 
         Logger.DEBUG = BuildConfig.DEBUG;
-        HttpClient.initialize(this, URL.URL_API);
-        HttpClient.getInstance().setLoggingLevel(
+        Http.init(this, URL.URL_API);
+        Http.get().setLoggingLevel(
                 BuildConfig.DEBUG ?
                         HttpLoggingInterceptor.Level.BODY :
                         HttpLoggingInterceptor.Level.NONE
