@@ -2,6 +2,7 @@ package org.domain.name.mvp.model;
 
 import com.alibaba.fastjson.JSONObject;
 
+import org.domain.name.mvp.model.bean.BannerBean;
 import org.domain.name.mvp.model.bean.Resp;
 
 import java.io.File;
@@ -15,9 +16,11 @@ import io.reactivex.Observable;
  * lx0758@qq.com
  */
 
-public interface GeneralApiModel {
+public interface ApiModel {
 
-    Observable<List<JSONObject>> loadBanner();
+    Observable<List<BannerBean>> loadBanner();
+
+    Observable<List<JSONObject>> query(String module);
 
     Observable<JSONObject> uploadFile(File file);
 

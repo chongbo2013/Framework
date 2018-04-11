@@ -32,6 +32,8 @@ dependencies {
     api 'com.liux:util:latest.release'
     api 'com.liux:tool:latest.release'
     api 'com.liux:view:latest.release'
+    api 'com.liux:glide:latest.release'
+    api 'com.liux:banner:latest.release'
     api 'com.liux:abstracts:latest.release'
 
     // Bugly

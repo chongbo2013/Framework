@@ -1,9 +1,9 @@
 package org.domain.name.di.module;
 
 import org.domain.name.mvp.model.DiskModel;
-import org.domain.name.mvp.model.GeneralApiModel;
+import org.domain.name.mvp.model.ApiModel;
 import org.domain.name.mvp.model.impl.DiskModelImpl;
-import org.domain.name.mvp.model.impl.GeneralApiModelImpl;
+import org.domain.name.mvp.model.impl.ApiModelImpl;
 
 import dagger.Module;
 import dagger.Provides;
@@ -23,7 +23,7 @@ public class ModelModule {
     }
 
     @Provides
-    GeneralApiModel provideGeneralApiModel(GeneralApiModelImpl generalApiModel) {
+    ApiModel provideGeneralApiModel(ApiModelImpl generalApiModel) {
         return generalApiModel;
     }
 }

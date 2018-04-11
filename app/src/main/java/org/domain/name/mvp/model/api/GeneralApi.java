@@ -28,7 +28,7 @@ import retrofit2.http.Query;
 public interface GeneralApi {
 
     @GET("/category")
-    Observable<Resp<String>> industry(
+    Observable<Resp<List<JSONObject>>> industry(
             @Query("e_s[module]") String module
     );
 

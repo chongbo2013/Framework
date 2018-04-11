@@ -10,6 +10,4 @@
     <color name="colorForeground">#FFFFFF</color>
     <color name="colorBackground">#EAEAEA</color>
 
-    <color name="main_tab_selected">@color/colorPrimary</color>
-    <color name="main_tab_normal">#999999</color>
 </resources>

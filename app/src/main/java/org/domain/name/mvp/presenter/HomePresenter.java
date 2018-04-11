@@ -1,11 +1,11 @@
 package org.domain.name.mvp.presenter;
 
-import com.alibaba.fastjson.JSONObject;
 import com.liux.framework.base.BasePresenter;
 
 import org.domain.name.mvp.contract.HomeContract;
-import org.domain.name.mvp.model.GeneralApiModel;
-import org.domain.name.rx.observer.GeneralObserver;
+import org.domain.name.mvp.model.ApiModel;
+import org.domain.name.mvp.model.bean.BannerBean;
+import org.domain.name.rx.observer.ApiObserver;
 import org.domain.name.rx.transformer.ApiTransformer;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import javax.inject.Inject;
 public class HomePresenter extends BasePresenter<HomeContract.View> implements HomeContract.Presenter {
 
     @Inject
-    GeneralApiModel mGeneralApiModel;
+    ApiModel mApiModel;
 
     @Inject
     HomePresenter() {
@@ -29,12 +29,12 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
     @Override
     public void loadBanner() {
-        mGeneralApiModel.loadBanner()
+        mApiModel.loadBanner()
                 .compose(ApiTransformer.api(mView))
-                .subscribe(new GeneralObserver<List<JSONObject>>() {
+                .subscribe(new ApiObserver<List<BannerBean>>() {
                     @Override
-                    public void onSucceed(List<JSONObject> jsonObjects) {
-                        mView.loadSucceed(jsonObjects);
+                    public void onSucceed(List<BannerBean> bannerBeans) {
+                        mView.loadSucceed(bannerBeans);
                     }
 
                     @Override

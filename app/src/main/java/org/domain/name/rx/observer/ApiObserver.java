@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONException;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import retrofit2.HttpException;
 
 /**
  * 2018/2/28
@@ -11,7 +12,7 @@ import io.reactivex.disposables.Disposable;
  * lx0758@qq.com
  */
 
-public abstract class GeneralObserver<T> implements Observer<T> {
+public abstract class ApiObserver<T> implements Observer<T> {
 
     @Override
     public void onSubscribe(Disposable d) {
@@ -27,10 +28,10 @@ public abstract class GeneralObserver<T> implements Observer<T> {
     public final void onError(Throwable e) {
         String message;
         if (e.getClass().getPackage().getName().equals("java.net")) {
-            // 没有网络
+            message = "网络连接失败,请检查网络连接";
+        } else if (e instanceof HttpException) {
             message = "网络连接失败,请检查网络连接";
         } else if (e instanceof JSONException) {
-            // 解析异常
             message = "服务器数据解析异常";
         } else {
             message = e.getMessage();

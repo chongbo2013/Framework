@@ -6,8 +6,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.liux.framework.base.BaseModel;
 import com.liux.http.HttpUtil;
 
-import org.domain.name.mvp.model.GeneralApiModel;
+import org.domain.name.mvp.model.ApiModel;
 import org.domain.name.mvp.model.api.GeneralApi;
+import org.domain.name.mvp.model.bean.BannerBean;
 import org.domain.name.mvp.model.bean.Resp;
 import org.domain.name.rx.transformer.ApiTransformer;
 
@@ -28,20 +29,29 @@ import okhttp3.MultipartBody;
  * lx0758@qq.com
  */
 
-public class GeneralApiModelImpl extends BaseModel implements GeneralApiModel {
+public class ApiModelImpl extends BaseModel implements ApiModel {
 
     @Inject
     GeneralApi mGeneralApi;
 
     @Inject
-    GeneralApiModelImpl() {
+    ApiModelImpl() {
     }
 
     @Override
-    public Observable<List<JSONObject>> loadBanner() {
-        return mGeneralApi.industry("hangye")
-                .compose(ApiTransformer.resp())
-                .map(string -> new ArrayList<>());
+    public Observable<List<BannerBean>> loadBanner() {
+        List<BannerBean> bannerBeans = new ArrayList<>();
+        bannerBeans.add(new BannerBean("Banner", "https://6xyun.cn/templates/themes/default/static/img/rand/1.jpg"));
+        bannerBeans.add(new BannerBean("封面", "https://6xyun.cn/templates/themes/default/static/img/rand/2.jpg"));
+        bannerBeans.add(new BannerBean("首页广告", "https://6xyun.cn/templates/themes/default/static/img/rand/3.jpg"));
+        bannerBeans.add(new BannerBean("横幅广告", "https://6xyun.cn/templates/themes/default/static/img/rand/4.jpg"));
+        return Observable.just(bannerBeans);
+    }
+
+    @Override
+    public Observable<List<JSONObject>> query(String module) {
+        return mGeneralApi.industry(module)
+                .compose(ApiTransformer.resp());
     }
 
     @Override

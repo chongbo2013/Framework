@@ -1,7 +1,8 @@
 package org.domain.name.mvp.contract;
 
-import com.alibaba.fastjson.JSONObject;
 import com.liux.framework.base.BaseContract;
+
+import org.domain.name.mvp.model.bean.BannerBean;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface HomeContract {
 
     interface View extends BaseContract.View {
 
-        void loadSucceed(List<JSONObject> jsonObjects);
+        void loadSucceed(List<BannerBean> bannerBeans);
 
         void loadFailure(String msg);
     }
